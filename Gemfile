@@ -8,4 +8,5 @@ gem 'devise'
 
 group :development do
   gem 'spring'
+  gem 'pry-debugger'
 end
