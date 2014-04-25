@@ -4,6 +4,8 @@ require 'rails/test_help'
 require 'minitest/pride'
 require 'pry'
 
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   #

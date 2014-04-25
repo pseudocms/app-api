@@ -11,7 +11,6 @@ class UserTest < ActiveSupport::TestCase
 
   test 'reset_auth_token generates a new token and saves the user' do
     user = users(:david)
-    user.save!
 
     token = user.auth_token.dup
     user.reset_auth_token

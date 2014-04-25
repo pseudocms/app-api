@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class V1::LoginTest < ActionDispatch::IntegrationTest
+  api_version 1
 
-  test 'succeeds with valid credentials' do
+  test 'succeeds and regenerates token with valid credentials' do
     user = users(:david)
 
     post '/users/login', nil, {
@@ -10,6 +11,7 @@ class V1::LoginTest < ActionDispatch::IntegrationTest
     }
 
     assert_response :success
+    refute response.body.include?(user.auth_token)
   end
 
   test 'fails with invalid credentials' do
@@ -26,19 +28,5 @@ class V1::LoginTest < ActionDispatch::IntegrationTest
 
     assert_response 401
     assert response.body.include?('"errors":')
-  end
-
-  private
-
-  DEFAULT_HEADERS = {
-    'HTTP_ACCEPT' => 'vnd.pseudocms.v1+json'
-  }
-
-  def post(uri, params = {}, headers = {})
-    super(uri, params, DEFAULT_HEADERS.merge(headers))
-  end
-
-  def encode_credentials(user, pass)
-    ActionController::HttpAuthentication::Basic.encode_credentials(user, pass)
   end
 end
