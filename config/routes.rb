@@ -6,7 +6,12 @@ Rails.application.routes.draw do
     }
   }
 
-  scope module: :v1, constrains: ApiConstraints.new('1') do
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications
+  end
+
+  scope module: :v1, defaults: { format: :json }, constrains: ApiConstraints.new('1') do
     devise_for :users, DEVISE_OPTIONS.merge(module: 'v1')
+    get '/user', to: 'users#show'
   end
 end

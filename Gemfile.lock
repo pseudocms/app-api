@@ -22,6 +22,8 @@ GEM
       activesupport (= 4.1.0)
       builder (~> 3.1)
       erubis (~> 2.7.0)
+    active_model_serializers (0.8.1)
+      activemodel (>= 3.0)
     activemodel (4.1.0)
       activesupport (= 4.1.0)
       builder (~> 3.1)
@@ -52,6 +54,8 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    doorkeeper (1.1.0)
+      railties (>= 3.1)
     erubis (2.7.0)
     hike (1.2.3)
     i18n (0.6.9)
@@ -59,9 +63,12 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    metaclass (0.0.4)
     method_source (0.8.2)
     mime-types (1.25.1)
     minitest (5.3.3)
+    mocha (1.0.0)
+      metaclass (~> 0.0.1)
     multi_json (1.9.2)
     orm_adapter (0.5.0)
     pg (0.17.1)
@@ -118,7 +125,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers
   devise
+  doorkeeper
+  mocha
   pg
   pry-debugger
   rails (= 4.1.0)

@@ -5,8 +5,14 @@ gem 'rails-api', github: 'rails-api/rails-api'
 gem 'pg'
 
 gem 'devise'
+gem 'doorkeeper'
+gem 'active_model_serializers'
 
 group :development do
   gem 'spring'
   gem 'pry-debugger'
+end
+
+group :test do
+  gem 'mocha', require: false
 end
