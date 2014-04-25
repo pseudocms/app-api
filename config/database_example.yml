@@ -1,0 +1,13 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: pseudomuto
+
+development:
+  <<: *default
+  database: pseudocms_api_dev
+
+test:
+  <<: *default
+  database: pseudocms_api_test

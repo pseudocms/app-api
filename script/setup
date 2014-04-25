@@ -1,0 +1,4 @@
+#!/bin/bash
+set -ex
+
+cp config/database_example.yml config/database.yml
