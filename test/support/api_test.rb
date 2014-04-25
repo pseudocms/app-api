@@ -15,8 +15,15 @@ module APITest
   module APITestHelpers
 
     def post(uri, params = {}, headers = {})
-      default_headers = { 'HTTP_ACCEPT' => 'vnd.pseudocms.v%s+json' % api_version }
       super(uri, params, default_headers.merge(headers))
+    end
+
+    def get(uri, params = {}, headers = {})
+      super(uri, params, default_headers.merge(headers))
+    end
+
+    def default_headers
+      { 'HTTP_ACCEPT' => 'vnd.pseudocms.v%s-json' % api_version }
     end
 
     def authenticate_as(fixture_name)
