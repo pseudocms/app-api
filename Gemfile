@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.0'
 gem 'rails-api', github: 'rails-api/rails-api'
 gem 'pg'
+gem 'unicorn-rails'
 
 gem 'devise'
 gem 'doorkeeper'
