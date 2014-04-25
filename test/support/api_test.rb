@@ -26,12 +26,13 @@ module APITest
       { 'HTTP_ACCEPT' => 'vnd.pseudocms.v%s-json' % api_version }
     end
 
-    def authenticate_as(fixture_name)
+    def authenticate_as(fixture_name, *scopes)
       user = users(fixture_name)
       app = user.applications.create(name: 'APITest', redirect_uri: 'http://test.com')
       token = Doorkeeper::AccessToken.create!(
         application_id: app.id,
-        resource_owner_id: user.id
+        resource_owner_id: user.id,
+        scopes: scopes.join(',')
       )
 
       ApplicationController.any_instance.stubs(:doorkeeper_token).returns(token)
