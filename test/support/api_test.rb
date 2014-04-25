@@ -19,6 +19,17 @@ module APITest
       super(uri, params, default_headers.merge(headers))
     end
 
+    def authenticate_as(fixture_name)
+      user = users(fixture_name)
+      app = user.applications.create(name: 'APITest', redirect_uri: 'http://test.com')
+      token = Doorkeeper::AccessToken.create!(
+        application_id: app.id,
+        resource_owner_id: user.id
+      )
+
+      ApplicationController.any_instance.stubs(:doorkeeper_token).returns(token)
+    end
+
     def encode_credentials(user, pass)
       ActionController::HttpAuthentication::Basic.encode_credentials(user, pass)
     end
