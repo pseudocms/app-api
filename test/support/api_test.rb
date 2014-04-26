@@ -22,6 +22,8 @@ module APITest
       super(uri, params, default_headers.merge(headers))
     end
 
+    private
+
     def default_headers
       { 'HTTP_ACCEPT' => 'vnd.pseudocms.v%s-json' % api_version }
     end
@@ -40,6 +42,10 @@ module APITest
 
     def encode_credentials(user, pass)
       ActionController::HttpAuthentication::Basic.encode_credentials(user, pass)
+    end
+
+    def response_hash
+      @response_hash ||= JSON.parse(response.body)
     end
   end
 end

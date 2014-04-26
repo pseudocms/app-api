@@ -8,7 +8,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     get '/user'
     assert_response :success
-    refute body.has_key?('auth_token')
+    refute response_hash.has_key?('auth_token')
   end
 
   test 'getting all users requires trusted_app scope' do
@@ -23,8 +23,8 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     get '/users'
     assert_response 200
-    assert_kind_of Array, body['users']
-    assert body['users'].size > 0
+    assert_kind_of Array, response_hash['users']
+    assert response_hash['users'].size > 0
   end
 
   test 'looking up a specific user requires the trusted_app scope' do
@@ -41,7 +41,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user = users(:david)
     get "/users/#{user.id}"
     assert_response :success
-    assert_equal user.email, body['user']['email']
+    assert_equal user.email, response_hash['user']['email']
   end
 
   test 'creating a user requires the trusted_app scope' do
@@ -72,9 +72,5 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
   def user_params(email: 'test@pseudocms.com', password: 'pAssword1')
     { user: { email: email, password: password } }
-  end
-
-  def body
-    @body ||= JSON.parse(response.body)
   end
 end
