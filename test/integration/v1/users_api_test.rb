@@ -3,7 +3,7 @@ require 'test_helper'
 class V1::UserAPITest < ActionDispatch::IntegrationTest
   api_version 1
 
-  test '/user returns the currently logged in user' do
+  test 'GET /user returns the currently logged in user' do
     authenticate_as(:david)
 
     get '/user'
@@ -11,7 +11,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     refute body.has_key?('auth_token')
   end
 
-  test '/user/:id requires the trusted_app scope' do
+  test 'looking up a specific user requires the trusted_app scope' do
     authenticate_as(:david)
 
     user = users(:david)
@@ -19,7 +19,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     assert_response 401
   end
 
-  test '/user/:id returns the user with the specified id' do
+  test 'looking up a specific user returns the user with the specified id' do
     authenticate_as(:david, :trusted_app)
 
     user = users(:david)
@@ -28,7 +28,35 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     assert_equal user.email, body['user']['email']
   end
 
+  test 'creating a user requires the trusted_app scope' do
+    authenticate_as(:david)
+
+    post '/users', user_params
+    assert_response 401
+  end
+
+  test 'creating a user succeeds with valid parameters' do
+    authenticate_as(:david, :trusted_app)
+
+    post '/users', user_params
+    assert_response :success
+  end
+
+  test 'creating a user with invalid parameters fails as unprocessable' do
+    authenticate_as(:david, :trusted_app)
+
+    post '/users', user_params(email: users(:david).email)
+    assert_response 422
+
+    post '/users', user_params(password: '')
+    assert_response 422
+  end
+
   private
+
+  def user_params(email: 'test@pseudocms.com', password: 'pAssword1')
+    { user: { email: email, password: password } }
+  end
 
   def body
     @body ||= JSON.parse(response.body)
