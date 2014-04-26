@@ -13,6 +13,6 @@ Rails.application.routes.draw do
   scope module: :v1, defaults: { format: :json }, constrains: ApiConstraints.new('1') do
     devise_for :users, DEVISE_OPTIONS.merge(module: 'v1')
     get '/user', to: 'users#user'
-    resources :users, only: [:create, :show]
+    resources :users, only: [:index, :create, :show]
   end
 end

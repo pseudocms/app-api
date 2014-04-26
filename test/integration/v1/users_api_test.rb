@@ -11,6 +11,22 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     refute body.has_key?('auth_token')
   end
 
+  test 'getting all users requires trusted_app scope' do
+    authenticate_as(:david)
+
+    get '/users'
+    assert_response 401
+  end
+
+  test 'getting all users returns users' do
+    authenticate_as(:david, :trusted_app)
+
+    get '/users'
+    assert_response 200
+    assert_kind_of Array, body['users']
+    assert body['users'].size > 0
+  end
+
   test 'looking up a specific user requires the trusted_app scope' do
     authenticate_as(:david)
 

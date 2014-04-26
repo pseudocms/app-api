@@ -1,6 +1,11 @@
 module V1
   class UsersController < ApplicationController
-    doorkeeper_for :show, :create, scopes: [:trusted_app]
+    doorkeeper_for :index, :show, :create, scopes: [:trusted_app]
+
+    # GET /users
+    def index
+      respond_with(User.all)
+    end
 
     # GET /user
     def user
