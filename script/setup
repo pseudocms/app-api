@@ -1,4 +1,8 @@
 #!/bin/bash
 set -ex
 
-cp config/database_example.yml config/database.yml
+# setup application
+cp config/database.yml.example config/database.yml
+
+# add heroku remotes
+git remote add production git@heroku.com:pseudocms-api.git
