@@ -2,7 +2,7 @@ worker_processes Integer(ENV['WEB_CONCURRENCY'] || 3)
 timeout Integer(ENV['WEB_TIMEOUT'] || 15)
 preload_app true
 
-listen 4001 if ::Rails.env.development?
+listen 4001 if defined?(::Rails) && ::Rails.env.development?
 
 before_fork do |server, worker|
   Signal.trap 'TERM' do
