@@ -20,14 +20,36 @@ module V1
 
     # POST /users
     def create
-      user = User.create(create_params)
+      user = User.create(user_params)
       respond_with(user, location: user)
+    end
+
+    # PATCH /users/:id
+    # PUT /users/:id
+    def update
+      user = current_resource_owner
+      user = User.find(params[:id]) if trusted_app?
+
+      if trusted_app? || account_owner?
+        user.update_attributes(user_params)
+        respond_with(user)
+      else
+        head 401
+      end
     end
 
     private
 
-    def create_params
+    def user_params
       params.require(:user).permit(:email, :password)
+    end
+
+    def trusted_app?
+      doorkeeper_token.scopes.include?('trusted_app')
+    end
+
+    def account_owner?
+      current_resource_owner.id.to_s == params[:id]
     end
   end
 end

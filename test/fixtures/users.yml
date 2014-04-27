@@ -2,3 +2,8 @@ david:
   email: david@pseudocms.com
   encrypted_password: <%= User.new.send(:password_digest, 'pAssword1') %>
   auth_token: someSpecial123Token
+
+xavier:
+  email: x@pseudocms.com
+  encrypted_password: <%= User.new.send(:password_digest, 'BatmanFTW!') %>
+  auth_token: someAuthToken

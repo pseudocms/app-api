@@ -68,6 +68,40 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     assert_response 422
   end
 
+  test 'updating a user can be done on their own account' do
+    authenticate_as(:david)
+
+    user = users(:david)
+    patch "/users/#{user.id}", user_params
+    assert_response :success
+    assert_equal user_params[:user][:email], user.reload.email
+  end
+
+  test 'updating another user requires the trusted_app scope' do
+    authenticate_as(:david)
+
+    user = users(:xavier)
+    patch "/users/#{user.id}", user_params
+    assert_response 401
+  end
+
+  test 'updating a user succeeds with valid parameters' do
+    authenticate_as(:david, :trusted_app)
+
+    user = users(:xavier)
+    patch "/users/#{user.id}", user_params
+    assert_response :success
+    assert_equal user_params[:user][:email], user.reload.email
+  end
+
+  test 'updating a user fails with invalid parameters' do
+    authenticate_as(:david)
+
+    user = users(:david)
+    patch "/users/#{user.id}", user_params(password: '')
+    assert_response 422
+  end
+
   private
 
   def user_params(email: 'test@pseudocms.com', password: 'pAssword1')
