@@ -1,0 +1,5 @@
+---
+test:
+  adapter: postgresql
+  database: pseudocms_api_test
+  username: postgres

@@ -5,6 +5,5 @@ rvm:
 before_install:
   - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
 before_script:
-  - bundle exec rake db:setup
-script:
-  - bundle exec rake test
+  - psql -c 'create database pseudocms_api_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
