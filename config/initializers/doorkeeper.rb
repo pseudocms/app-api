@@ -8,6 +8,16 @@ Doorkeeper.configure do
     current_user || warden.authenticate!(scope: :user)
   end
 
+  resource_owner_from_credentials do |routes|
+    request.params[:user] = {
+      email:    request.params[:username],
+      password: request.params[:password]
+    }
+
+    request.env['devise.allow_params_authentication'] = true
+    request.env['warden'].authenticate!(scope: :user)
+  end
+
 
   # Authorization Code expiration time (default 10 minutes).
   # authorization_code_expires_in 10.minutes
