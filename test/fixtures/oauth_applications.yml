@@ -1,0 +1,12 @@
+blessed_app:
+  name: Main Application
+  uid: main_app_client_id
+  secret: main_app_secret_value
+  redirect_uri: http://mainapp.com/
+  blessed: true
+
+normal_app:
+  name: Normal Application
+  uid: normal_app_client_id
+  secret: normal_app_secret_value
+  redirect_uri: http://normalapp.com/

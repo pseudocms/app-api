@@ -17,9 +17,25 @@ class TokenAccessibleTest < ActiveSupport::TestCase
   end
 
   test '#current_application is the owning application when doorkeeper_token' do
-    app_object = stub(name: 'Expected Application')
+    app_object = oauth_applications(:normal_app)
     token = stub(application: app_object)
     assert_equal app_object, subject(token).current_application
+  end
+
+  test '#blessed_app? is false when current_application is nil' do
+    refute subject.blessed_app?
+  end
+
+  test '#blessed_app? is false when current_application is not blessed' do
+    app_object = oauth_applications(:normal_app)
+    token = stub(application: app_object)
+    refute subject(token).blessed_app?
+  end
+
+  test '#blessed_app? is true when current_application is blessed' do
+    app_object = oauth_applications(:blessed_app)
+    token = stub(application: app_object)
+    assert subject(token).blessed_app?
   end
 
   private

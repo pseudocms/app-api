@@ -10,4 +10,8 @@ module TokenAccessible
     return unless doorkeeper_token
     @current_application ||= doorkeeper_token.application
   end
+
+  def blessed_app?
+    current_application && current_application.blessed?
+  end
 end
