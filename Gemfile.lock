@@ -57,6 +57,9 @@ GEM
     doorkeeper (1.1.0)
       railties (>= 3.1)
     erubis (2.7.0)
+    figaro (0.7.0)
+      bundler (~> 1.0)
+      rails (>= 3, < 5)
     hike (1.2.3)
     i18n (0.6.9)
     json (1.8.1)
@@ -142,6 +145,7 @@ DEPENDENCIES
   active_model_serializers
   devise
   doorkeeper
+  figaro
   mocha
   pg
   pry-debugger
