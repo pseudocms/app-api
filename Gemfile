@@ -15,6 +15,7 @@ gem 'figaro'
 group :development do
   gem 'spring'
   gem 'pry-debugger'
+  gem 'spring-commands-testunit'
 end
 
 group :test do

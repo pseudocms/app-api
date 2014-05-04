@@ -22,22 +22,39 @@ module APITest
       super(uri, params, default_headers.merge(headers))
     end
 
+    def patch(uri, params = {}, headers = {})
+      super(uri, params, default_headers.merge(headers))
+    end
+
     private
 
     def default_headers
-      { 'HTTP_ACCEPT' => 'vnd.pseudocms.v%s-json' % api_version }
+      @default_headers ||= {
+        'HTTP_ACCEPT' => 'vnd.pseudocms.v%s-json' % api_version
+      }
     end
 
-    def authenticate_as(fixture_name, *scopes)
-      user = users(fixture_name)
-      app = user.applications.create(name: 'APITest', redirect_uri: 'http://test.com')
+    def user_auth(user_fixture_name, app_fixture_name = :normal_app, *scopes)
+      user = users(user_fixture_name)
+      app = oauth_applications(app_fixture_name)
+
       token = Doorkeeper::AccessToken.create!(
         application_id: app.id,
         resource_owner_id: user.id,
         scopes: scopes.join(',')
       )
 
-      ApplicationController.any_instance.stubs(:doorkeeper_token).returns(token)
+      default_headers['HTTP_AUTHORIZATION'] = "Bearer #{token.token}"
+    end
+
+    def client_auth(app_fixture_name)
+      app = oauth_applications(app_fixture_name)
+
+      token = Doorkeeper::AccessToken.create!(
+        application_id: app.id
+      )
+
+      default_headers['HTTP_AUTHORIZATION'] = "Bearer #{token.token}"
     end
 
     def encode_credentials(user, pass)
