@@ -4,10 +4,11 @@ module V1
     allow(:user)   { current_user }
     allow(:show)   { blessed_app? || account_owner? }
     allow(:update) { account_owner? || blessed_app? }
+    deny(:create)  { current_user || !blessed_app? }
 
     # GET /users
     def index
-      respond_with(User.all)
+      respond_with(paginate(User.all))
     end
 
     # GET /user
@@ -23,8 +24,6 @@ module V1
 
     # POST /users
     def create
-      return head(403) if current_user || !blessed_app?
-
       user = User.create(user_params)
       respond_with(user, location: user)
     end
