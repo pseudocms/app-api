@@ -7,6 +7,12 @@ module Authorizable
         head(403) unless instance_eval(&block)
       end
     end
+
+    def deny(action, &block)
+      before_action only: [action] do
+        head(403) if instance_eval(&block)
+      end
+    end
   end
 
   def current_user

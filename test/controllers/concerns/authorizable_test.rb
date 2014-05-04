@@ -1,13 +1,59 @@
 require 'test_helper'
 
-class AuthorizableTest < ActiveSupport::TestCase
+class AuthorizableTest < ActionController::TestCase
 
-  class SampleController < ApplicationController
-    allow(:update) { account_owner? || blessed_app? }
+  class SampleController < ActionController::API
+    include Authorizable
 
-    def update
+    allow(:index) { account_owner? || blessed_app? }
+    deny(:new)    { !blessed_app? }
+
+    def index
       head 200
     end
+
+    def new
+      head 200
+    end
+  end
+
+  setup do
+    Rails.application.routes.draw do
+      namespace :authorizable_test do
+        controller :sample do
+          get 'index'
+          get 'new'
+        end
+      end
+    end
+  end
+
+  teardown do
+    Rails.application.reload_routes!
+  end
+
+  test '.allow allows access if block returns true' do
+    @controller = controller(account_owner?: true)
+    get :index
+    assert_response 200
+  end
+
+  test '.allow denies access if block returns false' do
+    @controller = controller(account_owner?: false, blessed_app?: false)
+    get :index
+    assert_response 403
+  end
+
+  test '.deny denies access if the block returns true' do
+    @controller = controller(blessed_app?: false)
+    get :new
+    assert_response 403
+  end
+
+  test '.deny allows access when the block returns false' do
+    @controller = controller(blessed_app?: true)
+    get :new
+    assert_response 200
   end
 
   test '#current_user is nil without doorkeeper_token' do
