@@ -1,6 +1,9 @@
 module V1
   class UsersController < ApplicationController
-    doorkeeper_for :index, :show, :create, scopes: [:trusted_app]
+    allow(:index)  { current_user.nil? && blessed_app? }
+    allow(:user)   { current_user }
+    allow(:show)   { blessed_app? || account_owner? }
+    allow(:update) { account_owner? || blessed_app? }
 
     # GET /users
     def index
@@ -9,7 +12,7 @@ module V1
 
     # GET /user
     def user
-      respond_with(current_resource_owner)
+      respond_with(current_user)
     end
 
     # GET /users/:id
@@ -20,6 +23,8 @@ module V1
 
     # POST /users
     def create
+      return head(403) if current_user || !blessed_app?
+
       user = User.create(user_params)
       respond_with(user, location: user)
     end
@@ -27,29 +32,15 @@ module V1
     # PATCH /users/:id
     # PUT /users/:id
     def update
-      user = current_resource_owner
-      user = User.find(params[:id]) if trusted_app?
-
-      if trusted_app? || account_owner?
-        user.update_attributes(user_params)
-        respond_with(user)
-      else
-        head 401
-      end
+      user = User.find(params[:id])
+      user.update_attributes(user_params)
+      respond_with(user)
     end
 
     private
 
     def user_params
       params.require(:user).permit(:email, :password)
-    end
-
-    def trusted_app?
-      doorkeeper_token.scopes.include?('trusted_app')
-    end
-
-    def account_owner?
-      current_resource_owner.id.to_s == params[:id]
     end
   end
 end

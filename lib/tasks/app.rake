@@ -1,5 +1,5 @@
 def letter_boxed(*messages)
-  box = "*" * 12
+  box = "*" * 50
   puts box
   messages.each do |message|
     puts "* #{message}"

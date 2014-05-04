@@ -8,11 +8,6 @@ require 'pry'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
+  set_fixture_class oauth_applications: Doorkeeper::Application
   fixtures :all
-
-  # Add more helper methods to be used by all tests here...
 end

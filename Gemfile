@@ -10,9 +10,12 @@ gem 'devise'
 gem 'doorkeeper'
 gem 'active_model_serializers'
 
+gem 'figaro'
+
 group :development do
   gem 'spring'
   gem 'pry-debugger'
+  gem 'spring-commands-testunit'
 end
 
 group :test do
