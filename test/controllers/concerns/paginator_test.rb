@@ -35,6 +35,13 @@ class PaginatorTest < ActiveSupport::TestCase
     controller.paginate(resource)
   end
 
+  test 'per_page parameter tops out at #max_per_page' do
+    expected_page_size = SampleController.new.max_per_page
+    resource = mock()
+    resource.expects(:paginate).with(has_entries(per_page: expected_page_size))
+    controller(per_page: expected_page_size + 1).paginate(resource)
+  end
+
   private
 
   def controller(params = {})
