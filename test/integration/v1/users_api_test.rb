@@ -2,6 +2,7 @@ require 'test_helper'
 
 class V1::UserAPITest < ActionDispatch::IntegrationTest
   api_version 1
+  pagination_test :paged_users_request
 
   test 'getting all users requires client credentials' do
     user_auth(:david)
@@ -24,6 +25,14 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_kind_of Array, response_hash['users']
     assert response_hash['users'].size > 0
+  end
+
+  test 'getting all users sets the link header' do
+    client_auth(:blessed_app)
+
+    get '/users'
+    assert_response :ok
+    assert response.headers.has_key?('Link')
   end
 
   test 'GET /user returns the currently logged in user' do
@@ -158,5 +167,10 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
   def user_params(email: 'test@pseudocms.com', password: 'pAssword1')
     { user: { email: email, password: password } }
+  end
+
+  def paged_users_request(page, per_page)
+    client_auth(:blessed_app)
+    get '/users', page: page, per_page: per_page
   end
 end
