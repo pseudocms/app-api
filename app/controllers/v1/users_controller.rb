@@ -8,7 +8,8 @@ module V1
 
     # GET /users
     def index
-      respond_with(paginate(User.all))
+      users = paginate(User.all, users_url)
+      respond_with(users)
     end
 
     # GET /user

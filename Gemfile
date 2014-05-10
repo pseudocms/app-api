@@ -11,7 +11,7 @@ gem 'doorkeeper'
 gem 'active_model_serializers'
 
 gem 'figaro'
-gem 'will_paginate'
+gem 'will_paginate', github: 'pseudomuto/will_paginate', ref: 'first_last_page_predicates_for_collection'
 
 group :development do
   gem 'spring'

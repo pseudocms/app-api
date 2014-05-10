@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/pseudomuto/will_paginate.git
+  revision: c659902cc93e1dab06bd9595b3ccd22bd6be4cdb
+  ref: first_last_page_predicates_for_collection
+  specs:
+    will_paginate (3.0.4)
+
+GIT
   remote: git://github.com/rails-api/rails-api.git
   revision: 62cbe9fde403822c40fb31d0bd897c608f104d51
   specs:
@@ -139,7 +146,6 @@ GEM
       unicorn
     warden (1.2.3)
       rack (>= 1.0)
-    will_paginate (3.0.5)
 
 PLATFORMS
   ruby
@@ -158,4 +164,4 @@ DEPENDENCIES
   spring
   spring-commands-testunit
   unicorn-rails
-  will_paginate
+  will_paginate!
