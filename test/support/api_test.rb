@@ -128,8 +128,8 @@ module APITest
       ActionController::HttpAuthentication::Basic.encode_credentials(user, pass)
     end
 
-    def response_hash
-      @response_hash ||= JSON.parse(response.body)
+    def json_response
+      @json_response ||= JSON.parse(response.body)
     end
   end
 end
