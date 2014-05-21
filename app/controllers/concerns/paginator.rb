@@ -36,10 +36,10 @@ module Paginator
 
   def set_link_header(base_uri, collection, per_page)
     links = paginator_page_links(collection).map do |rel, page_num|
-      "<#{base_uri}#{query_for_page(page_num, per_page)}>; rel=#{rel}"
+      "<#{base_uri}#{query_for_page(page_num, per_page)}>; rel=\"#{rel}\""
     end
 
-    response.headers['Link'] = links.join(',')
+    response.headers['Link'] = links.join(', ')
   end
 
   def paginator_page_links(collection)

@@ -54,7 +54,7 @@ module APITest
 
     private
 
-    LINK_HEADER_PATTERN = /\A<([^>]+)>;\s*rel=(.*)\z/
+    LINK_HEADER_PATTERN = /\A<([^>]+)>;\s*rel="(.*)"\z/
 
     def page_links
       @page_links ||= begin
