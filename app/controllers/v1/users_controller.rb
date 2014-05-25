@@ -4,7 +4,7 @@ module V1
     allow(:user)   { current_user }
     allow(:show)   { blessed_app? || account_owner? }
     allow(:update) { account_owner? || blessed_app? }
-    deny(:create)  { current_user || !blessed_app? }
+    allow(:create) { blessed_app? }
 
     # GET /users
     def index
