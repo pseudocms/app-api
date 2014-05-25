@@ -1,6 +1,6 @@
 module V1
   class UsersController < ApplicationController
-    allow(:index)  { current_user.nil? && blessed_app? }
+    allow(:index)  { blessed_app? }
     allow(:user)   { current_user }
     allow(:show)   { blessed_app? || account_owner? }
     allow(:update) { account_owner? || blessed_app? }
@@ -40,7 +40,7 @@ module V1
     private
 
     def user_params
-      params.require(:user).permit(:email, :password)
+      params.permit(:email, :password)
     end
   end
 end

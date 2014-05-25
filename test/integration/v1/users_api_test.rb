@@ -127,7 +127,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user = users(:david)
     patch "/users/#{user.id}", user_params
     assert_response :success
-    assert_equal user_params[:user][:email], user.reload.email
+    assert_equal user_params[:email], user.reload.email
   end
 
   test 'updating a user fails with invalid parameters' do
@@ -152,7 +152,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user = users(:david)
     patch "/users/#{user.id}", user_params
     assert_response :success
-    assert_equal user_params[:user][:email], user.reload.email
+    assert_equal user_params[:email], user.reload.email
   end
 
   test 'normal clients can\'t update a user' do
@@ -166,7 +166,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
   private
 
   def user_params(email: 'test@pseudocms.com', password: 'pAssword1')
-    { user: { email: email, password: password } }
+    { email: email, password: password }
   end
 
   def paged_users_request(page, per_page)
