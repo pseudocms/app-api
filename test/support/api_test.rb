@@ -93,6 +93,10 @@ module APITest
       super(uri, params, default_headers.merge(headers))
     end
 
+    def delete(uri, params = {}, headers = {})
+      super(uri, params, default_headers.merge(headers))
+    end
+
     private
 
     def default_headers

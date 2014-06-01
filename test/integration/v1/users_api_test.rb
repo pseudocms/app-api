@@ -163,6 +163,35 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     assert_response 403
   end
 
+  test 'a blessed client can delete a user account' do
+    client_auth(:blessed_app)
+
+    user = users(:xavier)
+    assert_difference 'User.count', -1 do
+      delete "/users/#{user.id}"
+      assert_response :no_content
+    end
+  end
+
+  test 'a 404 is returned when deleting a user that doesn\'t exist' do
+    client_auth(:blessed_app)
+
+    assert_no_difference 'User.count' do
+      delete '/users/0'
+      assert_response :not_found
+    end
+  end
+
+  test 'non-blessed clients can\'t delete a user' do
+    client_auth(:normal_app)
+
+    user = users(:xavier)
+    assert_no_difference 'User.count' do
+      delete "/users/#{user.id}"
+      assert_response :forbidden
+    end
+  end
+
   private
 
   def user_params(email: 'test@pseudocms.com', password: 'pAssword1')
