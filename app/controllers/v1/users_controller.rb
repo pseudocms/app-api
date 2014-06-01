@@ -1,10 +1,11 @@
 module V1
   class UsersController < ApplicationController
-    allow(:index)  { blessed_app? }
-    allow(:user)   { current_user }
-    allow(:show)   { blessed_app? || account_owner? }
-    allow(:update) { account_owner? || blessed_app? }
-    allow(:create) { blessed_app? }
+    allow(:index)   { blessed_app? }
+    allow(:user)    { current_user }
+    allow(:show)    { blessed_app? || account_owner? }
+    allow(:update)  { account_owner? || blessed_app? }
+    allow(:create)  { blessed_app? }
+    allow(:destroy) { blessed_app? }
 
     # GET /users
     def index
@@ -35,6 +36,15 @@ module V1
       user = User.find(params[:id])
       user.update_attributes(user_params)
       respond_with(user)
+    end
+
+    # DELETE /users/:id
+    def destroy
+      user = User.find(params[:id])
+      user.destroy
+      head(:no_content)
+    rescue ActiveRecord::RecordNotFound
+      head(:not_found)
     end
 
     private
