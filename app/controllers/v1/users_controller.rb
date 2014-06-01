@@ -42,9 +42,9 @@ module V1
     def destroy
       user = User.find(params[:id])
       user.destroy
-      head :no_content
+      head(:no_content)
     rescue ActiveRecord::RecordNotFound
-      head :not_found
+      head(:not_found)
     end
 
     private

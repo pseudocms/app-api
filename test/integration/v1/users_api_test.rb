@@ -8,14 +8,14 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user_auth(:david)
 
     get '/users'
-    assert_response 403
+    assert_response :forbidden
   end
 
   test 'getting all users requires the authenticated client to be blessed' do
     client_auth(:normal_app)
 
     get '/users'
-    assert_response 403
+    assert_response :forbidden
   end
 
   test 'getting all users returns users' do
@@ -47,7 +47,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     client_auth(:normal_app)
 
     get '/user'
-    assert_response 403
+    assert_response :forbidden
   end
 
   test 'the authenticated user can look up themselves' do
@@ -64,7 +64,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = users(:xavier)
     get "/users/#{user.id}"
-    assert_response 403
+    assert_response :forbidden
   end
 
   test 'blessed clients can look up a specific user' do
@@ -81,21 +81,21 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = users(:david)
     get "/users/#{user.id}"
-    assert_response 403
+    assert_response :forbidden
   end
 
   test 'creating a user requires client authentication' do
     user_auth(:david)
 
     post '/users', user_params
-    assert_response 403
+    assert_response :forbidden
   end
 
   test 'creating a user requires a blessed client' do
     client_auth(:normal_app)
 
     post '/users', user_params
-    assert_response 403
+    assert_response :forbidden
   end
 
   test 'creating a user succeeds with valid parameters' do
@@ -143,7 +143,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = users(:xavier)
     patch "/users/#{user.id}", user_params
-    assert_response 403
+    assert_response :forbidden
   end
 
   test 'a blessed client can update any user account' do
@@ -160,7 +160,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = users(:xavier)
     patch "/users/#{user.id}", user_params
-    assert_response 403
+    assert_response :forbidden
   end
 
   test 'a blessed client can delete a user account' do
