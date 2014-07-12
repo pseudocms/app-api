@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140503175917) do
+ActiveRecord::Schema.define(version: 20140712233438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,24 @@ ActiveRecord::Schema.define(version: 20140503175917) do
 
   add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+
+  create_table "sites", force: true do |t|
+    t.string   "name",        null: false
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sites", ["name"], name: "index_sites_on_name", unique: true, using: :btree
+
+  create_table "sites_users", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "site_id"
+  end
+
+  add_index "sites_users", ["site_id"], name: "index_sites_users_on_site_id", using: :btree
+  add_index "sites_users", ["user_id", "site_id"], name: "index_sites_users_on_user_id_and_site_id", unique: true, using: :btree
+  add_index "sites_users", ["user_id"], name: "index_sites_users_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
