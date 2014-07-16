@@ -181,7 +181,17 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "non-blessed clients can\"t delete a user" do
+  test "a 412 is returned when deleting a user that is an owner of a site" do
+    client_auth(:blessed_app)
+
+    user = users(:david)
+    assert_no_difference "User.count" do
+      delete "/users/#{user.id}"
+      assert_response :precondition_failed
+    end
+  end
+
+  test 'non-blessed clients can\'t delete a user' do
     client_auth
 
     user = create(:user)

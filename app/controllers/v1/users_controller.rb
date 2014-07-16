@@ -7,6 +7,8 @@ module V1
     allow(:create)  { blessed_app? }
     allow(:destroy) { blessed_app? }
 
+    before_action :ensure_no_site_ownership, only: :destroy
+
     # GET /users
     def index
       users = paginate(User.all, users_url)
@@ -43,14 +45,19 @@ module V1
       user = User.find(params[:id])
       user.destroy
       head(:no_content)
-    rescue ActiveRecord::RecordNotFound
-      head(:not_found)
     end
 
     private
 
     def user_params
       params.permit(:email, :password)
+    end
+
+    def ensure_no_site_ownership
+      user = User.find(params[:id])
+      head(:precondition_failed) if user.owned_sites.any?
+    rescue ActiveRecord::RecordNotFound
+      head(:not_found)
     end
   end
 end

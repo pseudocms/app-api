@@ -18,4 +18,13 @@ class SiteTest < ActiveSupport::TestCase
     assert_equal 1, new_site.errors.size
     assert new_site.errors.has_key?(:name)
   end
+
+  test "creating a site, creates the association with the owner" do
+    new_site = Site.new(name: 'some site', owner: users(:david))
+    new_site.run_callbacks(:commit) do
+      new_site.save!
+    end
+
+    assert_equal 1, new_site.users.size
+  end
 end
