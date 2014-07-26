@@ -15,7 +15,7 @@ gem 'will_paginate', github: 'pseudomuto/will_paginate', ref: 'first_last_page_p
 
 group :development do
   gem 'spring'
-  gem 'pry-debugger'
+  gem 'pry-byebug'
   gem 'spring-commands-testunit'
 end
 
