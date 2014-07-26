@@ -105,27 +105,24 @@ module APITest
       }
     end
 
-    def user_auth(user_fixture_name, app_fixture_name = :normal_app, *scopes)
-      user = users(user_fixture_name)
-      app = oauth_applications(app_fixture_name)
+    def user_auth(user_name, blessed: false, scopes: [])
+      user = create(:user)
+      app = create(:app, blessed: blessed)
 
       token = Doorkeeper::AccessToken.create!(
         application_id: app.id,
         resource_owner_id: user.id,
-        scopes: scopes.join(',')
+        scopes: scopes.join(",")
       )
 
-      default_headers['HTTP_AUTHORIZATION'] = "Bearer #{token.token}"
+      default_headers["HTTP_AUTHORIZATION"] = "Bearer #{token.token}"
     end
 
-    def client_auth(app_fixture_name)
-      app = oauth_applications(app_fixture_name)
+    def client_auth(blessed: false)
+      app = create(:app, blessed: blessed)
+      token = Doorkeeper::AccessToken.create!(application_id: app.id)
 
-      token = Doorkeeper::AccessToken.create!(
-        application_id: app.id
-      )
-
-      default_headers['HTTP_AUTHORIZATION'] = "Bearer #{token.token}"
+      default_headers["HTTP_AUTHORIZATION"] = "Bearer #{token.token}"
     end
 
     def encode_credentials(user, pass)
