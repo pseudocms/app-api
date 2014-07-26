@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
+ruby '2.1.2'
 
-gem 'rails', '4.1.0'
+gem 'rails', '4.1.4'
 gem 'rails-api', github: 'rails-api/rails-api'
 gem 'pg'
 gem 'unicorn-rails'
@@ -15,7 +15,7 @@ gem 'will_paginate', github: 'pseudomuto/will_paginate', ref: 'first_last_page_p
 
 group :development do
   gem 'spring'
-  gem 'pry-debugger'
+  gem 'pry-byebug'
   gem 'spring-commands-testunit'
 end
 
