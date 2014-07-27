@@ -63,7 +63,7 @@ class AuthorizableTest < ActionController::TestCase
   test '#current_user is nil when token has no owner (app)' do
     overrides = {
       doorkeeper_token: stub(
-        application: oauth_applications(:normal_app),
+        application: create(:app),
         resource_owner_id: nil
       )
     }
@@ -72,7 +72,7 @@ class AuthorizableTest < ActionController::TestCase
   end
 
   test '#current_user is the token owner when doorkeeper_token' do
-    user = users(:david)
+    user = create(:user)
     overrides = { doorkeeper_token: stub(resource_owner_id: user.id) }
     assert_equal user, controller(overrides).current_user
   end
@@ -82,7 +82,7 @@ class AuthorizableTest < ActionController::TestCase
   end
 
   test '#current_application is the owning application when doorkeeper_token' do
-    app = oauth_applications(:normal_app)
+    app = create(:app)
     overrides = { doorkeeper_token: stub(application: app) }
     assert_equal app, controller(overrides).current_application
   end
@@ -92,13 +92,13 @@ class AuthorizableTest < ActionController::TestCase
   end
 
   test '#blessed_app? is false when current_application is not blessed' do
-    app = oauth_applications(:normal_app)
+    app = create(:app)
     overrides = { doorkeeper_token: stub(application: app) }
     refute controller(overrides).blessed_app?
   end
 
   test '#blessed_app? is true when current_application is blessed' do
-    app = oauth_applications(:blessed_app)
+    app = create(:blessed_app)
     overrides = { doorkeeper_token: stub(application: app) }
     assert controller(overrides).blessed_app?
   end

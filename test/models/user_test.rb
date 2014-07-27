@@ -3,7 +3,7 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
 
   test 'email must be unique' do
-    user = users(:david)
+    user = create(:user)
     new_user = User.new(email: user.email, password: 'somePassword')
 
     refute new_user.save

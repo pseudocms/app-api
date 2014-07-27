@@ -72,8 +72,14 @@ module APITest
     end
 
     def last_page_number
-      pagination_setup(1, 1)
-      last_page = page_links[:last][/page=(\d+)/][$1]
+      last_page = 0
+
+      ActiveRecord::Base.transaction do
+        pagination_setup(1, 1)
+        last_page = page_links[:last][/page=(\d+)/][$1]
+        raise ActiveRecord::Rollback, "rolling it back"
+      end
+
       @page_links = nil
       last_page
     end
@@ -105,27 +111,26 @@ module APITest
       }
     end
 
-    def user_auth(user_fixture_name, app_fixture_name = :normal_app, *scopes)
-      user = users(user_fixture_name)
-      app = oauth_applications(app_fixture_name)
+    def user_auth(user_name, blessed: false, scopes: [])
+      user = create(:user, email: "#{user_name}@pseudocms.com")
+      app = create(:app, blessed: blessed)
 
       token = Doorkeeper::AccessToken.create!(
         application_id: app.id,
         resource_owner_id: user.id,
-        scopes: scopes.join(',')
+        scopes: scopes.join(",")
       )
 
-      default_headers['HTTP_AUTHORIZATION'] = "Bearer #{token.token}"
+      default_headers["HTTP_AUTHORIZATION"] = "Bearer #{token.token}"
+      user
     end
 
-    def client_auth(app_fixture_name)
-      app = oauth_applications(app_fixture_name)
+    def client_auth(blessed: false)
+      app = create(:app, blessed: blessed)
+      token = Doorkeeper::AccessToken.create!(application_id: app.id)
 
-      token = Doorkeeper::AccessToken.create!(
-        application_id: app.id
-      )
-
-      default_headers['HTTP_AUTHORIZATION'] = "Bearer #{token.token}"
+      default_headers["HTTP_AUTHORIZATION"] = "Bearer #{token.token}"
+      app
     end
 
     def encode_credentials(user, pass)

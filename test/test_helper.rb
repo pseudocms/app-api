@@ -8,6 +8,6 @@ require 'pry'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 class ActiveSupport::TestCase
-  set_fixture_class oauth_applications: Doorkeeper::Application
-  fixtures :all
+  self.use_transactional_fixtures = true
+  include FactoryGirl::Syntax::Methods
 end
