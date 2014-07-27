@@ -72,7 +72,7 @@ class AuthorizableTest < ActionController::TestCase
   end
 
   test '#current_user is the token owner when doorkeeper_token' do
-    user = users(:david)
+    user = create(:user)
     overrides = { doorkeeper_token: stub(resource_owner_id: user.id) }
     assert_equal user, controller(overrides).current_user
   end

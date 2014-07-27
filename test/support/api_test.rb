@@ -72,8 +72,14 @@ module APITest
     end
 
     def last_page_number
-      pagination_setup(1, 1)
-      last_page = page_links[:last][/page=(\d+)/][$1]
+      last_page = 0
+
+      ActiveRecord::Base.transaction do
+        pagination_setup(1, 1)
+        last_page = page_links[:last][/page=(\d+)/][$1]
+        raise ActiveRecord::Rollback, "rolling it back"
+      end
+
       @page_links = nil
       last_page
     end
@@ -106,7 +112,7 @@ module APITest
     end
 
     def user_auth(user_name, blessed: false, scopes: [])
-      user = create(:user)
+      user = create(:user, email: "#{user_name}@pseudocms.com")
       app = create(:app, blessed: blessed)
 
       token = Doorkeeper::AccessToken.create!(
@@ -116,6 +122,7 @@ module APITest
       )
 
       default_headers["HTTP_AUTHORIZATION"] = "Bearer #{token.token}"
+      user
     end
 
     def client_auth(blessed: false)
@@ -123,6 +130,7 @@ module APITest
       token = Doorkeeper::AccessToken.create!(application_id: app.id)
 
       default_headers["HTTP_AUTHORIZATION"] = "Bearer #{token.token}"
+      app
     end
 
     def encode_credentials(user, pass)
