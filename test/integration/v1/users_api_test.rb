@@ -113,12 +113,12 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     assert_no_difference "User.count" do
       post "/users", user_params(email: user.email)
-      assert_response 422
+      assert_response :unprocessable_entity
     end
 
     assert_no_difference "User.count" do
       post "/users", user_params(password: "")
-      assert_response 422
+      assert_response :unprocessable_entity
     end
   end
 

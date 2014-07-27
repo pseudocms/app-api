@@ -15,6 +15,6 @@ Rails.application.routes.draw do
   scope module: :v1, defaults: { format: :json }, constraints: ApiConstraints.new('1', default: true) do
     get '/user', to: 'users#user'
     resources :users, except: [:new, :edit]
-    resources :sites, only: [:index]
+    resources :sites, only: [:index, :show, :create]
   end
 end

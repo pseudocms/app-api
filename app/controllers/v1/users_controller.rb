@@ -56,8 +56,6 @@ module V1
     def ensure_no_site_ownership
       user = User.find(params[:id])
       head(:precondition_failed) if user.owned_sites.any?
-    rescue ActiveRecord::RecordNotFound
-      head(:not_found)
     end
   end
 end

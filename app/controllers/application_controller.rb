@@ -7,4 +7,12 @@ class ApplicationController < ActionController::API
 
   respond_to :json
   doorkeeper_for :all
+
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
+  protected
+
+  def not_found
+    head(:not_found)
+  end
 end
