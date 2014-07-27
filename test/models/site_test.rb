@@ -11,8 +11,9 @@ class SiteTest < ActiveSupport::TestCase
   end
 
   test "name must be unique" do
-    site = sites(:pseudocms)
-    new_site = Site.new(name: site.name, description: 'some description')
+    user = create(:user)
+    site = create(:site, owner: user)
+    new_site = Site.new(name: site.name, description: 'some description', owner: user)
 
     refute new_site.save
     assert_equal 1, new_site.errors.size
@@ -20,7 +21,7 @@ class SiteTest < ActiveSupport::TestCase
   end
 
   test "creating a site, creates the association with the owner" do
-    new_site = Site.new(name: 'some site', owner: users(:david))
+    new_site = Site.new(name: 'some site', owner: create(:user))
     new_site.run_callbacks(:commit) do
       new_site.save!
     end

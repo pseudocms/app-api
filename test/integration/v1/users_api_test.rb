@@ -182,9 +182,11 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
   end
 
   test "a 412 is returned when deleting a user that is an owner of a site" do
-    client_auth(:blessed_app)
+    client_auth(blessed: true)
 
-    user = users(:david)
+    user = create(:user)
+    site = create(:site, owner: user)
+
     assert_no_difference "User.count" do
       delete "/users/#{user.id}"
       assert_response :precondition_failed
@@ -215,6 +217,6 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
   end
 
   def make_users(num: 10)
-    1.upto([1, num].max) { |n| create(:user, email: "user-#{n}@pseudocms.com") }
+    [1, num].max.times { create(:user) }
   end
 end
