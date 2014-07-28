@@ -155,6 +155,66 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "a site owner can update they're site" do
+    user = user_auth(:david)
+    site = make_site(user)
+
+    patch "/sites/#{site.id}", site_params(name: "silly_site", description: "desc")
+    assert_response :success
+
+    site.reload
+    assert_equal "silly_site", site.name
+    assert_equal "desc", site.description
+  end
+
+  test "anyone associated with a site can update it" do
+    user, other_user = create(:user), user_auth(:david)
+    site = make_site(user, users: [user, other_user])
+
+    patch "/sites/#{site.id}", site_params(name: "updated_site")
+    assert_response :success
+  end
+
+  test "a user that is not associated with a site cannot update it" do
+    user, other_user = create(:user), user_auth(:david)
+    site = make_site(user)
+
+    patch "/sites/#{site.id}", site_params(name: "Something New")
+    assert_response :forbidden
+  end
+
+  test "a blessed app can update any site" do
+    client_auth(blessed: true)
+
+    user = create(:user)
+    site = make_site(user)
+
+    patch "/sites/#{site.id}", site_params(name: "New Name")
+    assert_response :success
+  end
+
+  test "updating a site fails with invalid parameters" do
+    user = user_auth(:david)
+    site = make_site(user)
+
+    patch "/sites/#{site.id}", site_params(name: "")
+    assert_response :unprocessable_entity
+
+    new_site = make_site(user)
+    patch "/sites/#{new_site.id}", site_params(name: site.name)
+    assert_response :unprocessable_entity
+  end
+
+  test "updating a site requires blessed app or client_auth" do
+    client_auth
+
+    user = create(:user)
+    site = make_site(user)
+
+    patch "/sites/#{site.id}", site_params
+    assert_response :forbidden
+  end
+
   private
 
   def paged_sites_request(page, per_page)

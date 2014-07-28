@@ -1,16 +1,13 @@
 module V1
   class SitesController < ApplicationController
-    allow(:index) { blessed_app? || current_user }
-    allow(:create) { blessed_app? || current_user }
+    allow(:index)  { blessed_or_user? }
+    allow(:show)   { blessed_or_user? }
+    allow(:create) { blessed_or_user? }
+    allow(:update) { blessed_or_user? }
 
     # GET /sites
     def index
-      sites = if blessed_app?
-                Site.all
-              else
-                current_user.sites
-              end
-
+      sites = blessed_app? ? Site.all : current_user.sites
       respond_with(paginate(sites, sites_url))
     end
 
@@ -27,13 +24,22 @@ module V1
       user = current_user
       user = User.find(owner_params[:owner_id]) if blessed_app?
 
-      site = user.owned_sites.create(create_params)
+      site = user.owned_sites.create(site_params)
       respond_with(site, location: site)
+    end
+
+    # PATCH /sites/:id
+    def update
+      site = Site.find(params[:id])
+      return head(:forbidden) unless blessed_app? || site.users.include?(current_user)
+
+      site.update_attributes(site_params)
+      respond_with(site)
     end
 
     private
 
-    def create_params
+    def site_params
       params.require(:site).permit(:name, :description)
     end
 
@@ -43,6 +49,10 @@ module V1
 
     def site_not_found
       head(:not_found)
+    end
+
+    def blessed_or_user?
+      blessed_app? || current_user
     end
   end
 end
