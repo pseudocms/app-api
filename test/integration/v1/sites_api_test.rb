@@ -215,6 +215,60 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     assert_response :forbidden
   end
 
+  test "a site owner can destroy a site" do
+    user = user_auth(:david)
+    site = make_site(user)
+
+    assert_difference "Site.count", -1 do
+      delete "/sites/#{site.id}"
+    end
+  end
+
+  test "a user that is associated with a site cannot destroy a site" do
+    user, other_user = create(:user), user_auth(:david)
+    site = make_site(user, users: [user, other_user])
+
+    assert_no_difference "Site.count" do
+      delete "/sites/#{site.id}"
+      assert_response :forbidden
+    end
+  end
+
+  test "a blessed app can delete any site" do
+    client_auth(blessed: true)
+
+    user = create(:user)
+    site = make_site(user)
+
+    assert_difference "Site.count", -1 do
+      delete "/sites/#{site.id}"
+      assert_response :no_content
+    end
+  end
+
+
+  test "deleting a site requires blessed app or user authentication" do
+    client_auth
+
+    user = create(:user)
+    site = make_site(user)
+
+    assert_no_difference "Site.count" do
+      delete "/sites/#{site.id}"
+      assert_response :forbidden
+    end
+  end
+
+
+  test "deleting a site that is not found returns a 404" do
+    client_auth(blessed: true)
+
+    assert_no_difference "Site.count" do
+      delete "/sites/0"
+      assert_response :not_found
+    end
+  end
+
   private
 
   def paged_sites_request(page, per_page)
