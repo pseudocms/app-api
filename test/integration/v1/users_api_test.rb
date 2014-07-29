@@ -113,12 +113,12 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     assert_no_difference "User.count" do
       post "/users", user_params(email: user.email)
-      assert_response 422
+      assert_response :unprocessable_entity
     end
 
     assert_no_difference "User.count" do
       post "/users", user_params(password: "")
-      assert_response 422
+      assert_response :unprocessable_entity
     end
   end
 
@@ -181,7 +181,19 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "non-blessed clients can\"t delete a user" do
+  test "a 412 is returned when deleting a user that is an owner of a site" do
+    client_auth(blessed: true)
+
+    user = create(:user)
+    site = create(:site, owner: user)
+
+    assert_no_difference "User.count" do
+      delete "/users/#{user.id}"
+      assert_response :precondition_failed
+    end
+  end
+
+  test 'non-blessed clients can\'t delete a user' do
     client_auth
 
     user = create(:user)
@@ -205,6 +217,6 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
   end
 
   def make_users(num: 10)
-    1.upto([1, num].max) { |n| create(:user, email: "user-#{n}@pseudocms.com") }
+    [1, num].max.times { create(:user) }
   end
 end
