@@ -48,11 +48,11 @@ module V1
     end
 
     def site_params
-      params.require(:site).permit(:name, :description)
+      params.permit(:name, :description)
     end
 
     def owner_params
-      params.require(:site).permit(:owner_id)
+      params.permit(:owner_id)
     end
 
     def blessed_or_user?

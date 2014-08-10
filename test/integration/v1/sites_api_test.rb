@@ -288,6 +288,6 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
   end
 
   def site_params(attrs = {})
-    { site: { name: "Some Site", description: "Some description" }.merge(attrs) }
+    { name: "Some Site", description: "Some description" }.merge(attrs)
   end
 end
