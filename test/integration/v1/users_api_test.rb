@@ -8,16 +8,14 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user_auth(:david)
 
     get "/users"
-    assert_response :forbidden
+    assert_permission_denied
   end
 
   test "getting all users requires the authenticated client to be blessed" do
     client_auth
 
     get "/users"
-    assert_response :forbidden
-    assert_equal 403, json_response["errors"]["status"]
-    assert_equal "Permission denied", json_response["errors"]["message"]
+    assert_permission_denied
   end
 
   test "getting all users returns users" do
@@ -50,9 +48,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     client_auth
 
     get "/user"
-    assert_response :forbidden
-    assert_equal 403, json_response["errors"]["status"]
-    assert_equal "Permission denied", json_response["errors"]["message"]
+    assert_permission_denied
   end
 
   test "the authenticated user can look up themselves" do
@@ -68,9 +64,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = create(:user)
     get "/users/#{user.id}"
-    assert_response :forbidden
-    assert_equal 403, json_response["errors"]["status"]
-    assert_equal "Permission denied", json_response["errors"]["message"]
+    assert_permission_denied
   end
 
   test "blessed clients can look up a specific user" do
@@ -87,27 +81,21 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = create(:user)
     get "/users/#{user.id}"
-    assert_response :forbidden
-    assert_equal 403, json_response["errors"]["status"]
-    assert_equal "Permission denied", json_response["errors"]["message"]
+    assert_permission_denied
   end
 
   test "creating a user requires client authentication" do
     user_auth(:david)
 
     post "/users", user_params
-    assert_response :forbidden
-    assert_equal 403, json_response["errors"]["status"]
-    assert_equal "Permission denied", json_response["errors"]["message"]
+    assert_permission_denied
   end
 
   test "creating a user requires a blessed client" do
     client_auth
 
     post "/users", user_params
-    assert_response :forbidden
-    assert_equal 403, json_response["errors"]["status"]
-    assert_equal "Permission denied", json_response["errors"]["message"]
+    assert_permission_denied
   end
 
   test "creating a user succeeds with valid parameters" do
@@ -125,14 +113,12 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     assert_no_difference "User.count" do
       post "/users", user_params(email: user.email)
-      assert_response :unprocessable_entity
-      assert_not_nil json_response["errors"]
+      assert_error(:unprocessable_entity, no_body: true)
     end
 
     assert_no_difference "User.count" do
       post "/users", user_params(password: "")
-      assert_response :unprocessable_entity
-      assert_not_nil json_response["errors"]
+      assert_error(:unprocessable_entity, no_body: true)
     end
   end
 
@@ -148,8 +134,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user = user_auth(:david)
 
     patch "/users/#{user.id}", user_params(password: "")
-    assert_response :unprocessable_entity
-    assert_not_nil json_response["errors"]
+    assert_error(:unprocessable_entity, no_body: true)
   end
 
   test "a user can only update their own account" do
@@ -157,9 +142,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = create(:user)
     patch "/users/#{user.id}", user_params
-    assert_response :forbidden
-    assert_equal 403, json_response["errors"]["status"]
-    assert_equal "Permission denied", json_response["errors"]["message"]
+    assert_permission_denied
   end
 
   test "a blessed client can update any user account" do
@@ -176,9 +159,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = create(:user)
     patch "/users/#{user.id}", user_params
-    assert_response :forbidden
-    assert_equal 403, json_response["errors"]["status"]
-    assert_equal "Permission denied", json_response["errors"]["message"]
+    assert_permission_denied
   end
 
   test "a blessed client can delete a user account" do
@@ -196,9 +177,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     assert_no_difference "User.count" do
       delete "/users/0"
-      assert_response :not_found
-      assert_equal 404, json_response["errors"]["status"]
-      assert_equal "User not found", json_response["errors"]["message"]
+      assert_not_found
     end
   end
 
@@ -210,9 +189,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     assert_no_difference "User.count" do
       delete "/users/#{user.id}"
-      assert_response :precondition_failed
-      assert_equal 412, json_response["errors"]["status"]
-      assert_equal "User owns one or more sites", json_response["errors"]["message"]
+      assert_error(:precondition_failed, message: "User owns one or more sites")
     end
   end
 
@@ -222,9 +199,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user = create(:user)
     assert_no_difference "User.count" do
       delete "/users/#{user.id}"
-      assert_response :forbidden
-      assert_equal 403, json_response["errors"]["status"]
-      assert_equal "Permission denied", json_response["errors"]["message"]
+      assert_permission_denied
     end
   end
 
