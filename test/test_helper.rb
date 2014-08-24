@@ -6,8 +6,3 @@ require 'mocha/setup'
 require 'pry'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
-
-class ActiveSupport::TestCase
-  self.use_transactional_fixtures = true
-  include FactoryGirl::Syntax::Methods
-end
