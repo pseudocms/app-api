@@ -14,24 +14,35 @@ module APITest
   end
 
   module TestModule
+
+    private
+
+    def assert_request_id_header
+      assert response.headers.has_key?("X-Request-Id")
+      assert_match /\w{8}\-(\w{4}\-){3}\w{12}/, response.headers["X-Request-Id"]
+    end
   end
 
   module TestHelpers
 
     def post(uri, params = {}, headers = {})
       super(uri, params, default_headers.merge(headers))
+      assert_request_id_header
     end
 
     def get(uri, params = {}, headers = {})
       super(uri, params, default_headers.merge(headers))
+      assert_request_id_header
     end
 
     def patch(uri, params = {}, headers = {})
       super(uri, params, default_headers.merge(headers))
+      assert_request_id_header
     end
 
     def delete(uri, params = {}, headers = {})
       super(uri, params, default_headers.merge(headers))
+      assert_request_id_header
     end
 
     private
