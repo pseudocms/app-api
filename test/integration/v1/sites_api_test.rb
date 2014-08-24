@@ -13,9 +13,9 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     get "/sites"
     assert_response :success
-    assert_kind_of Array, json_response
-    assert_equal 1, json_response.size
-    refute json_response.map { |site| site["name"] }.include?("SiteB")
+    assert_kind_of Array, api_response
+    assert_equal 1, api_response.size
+    refute api_response.map { |site| site["name"] }.include?("SiteB")
   end
 
   test "getting all sites as a blessed app returns all sites" do
@@ -27,9 +27,9 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     get "/sites"
     assert_response :success
-    assert_kind_of Array, json_response
+    assert_kind_of Array, api_response
 
-    names = json_response.map { |site| site["name"] }
+    names = api_response.map { |site| site["name"] }
     ["SiteA", "SiteB"].each { |name| assert names.include?(name) }
   end
 
@@ -46,7 +46,7 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     get "/sites/#{site.id}"
     assert_response :success
-    assert_equal site.name, json_response["name"]
+    assert_equal site.name, api_response["name"]
   end
 
   test "a user can get a site they are associated with" do
@@ -74,7 +74,7 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     get "/sites/#{site.id}"
     assert_response :success
-    assert_equal site.name, json_response["name"]
+    assert_equal site.name, api_response["name"]
   end
 
   test "when a site is not found, a 404 is returned" do

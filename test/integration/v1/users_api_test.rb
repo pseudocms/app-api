@@ -24,8 +24,8 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     get "/users"
     assert_response :ok
-    assert_kind_of Array, json_response
-    assert json_response.size > 0
+    assert_kind_of Array, api_response
+    assert api_response.size > 0
   end
 
   test "getting all users sets the link header" do
@@ -41,7 +41,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     get "/user"
     assert_response :success
-    assert_equal User.find_by_email("david@pseudocms.com").email, json_response["email"]
+    assert_equal User.find_by_email("david@pseudocms.com").email, api_response["email"]
   end
 
   test "/user requires an authenticated user" do
@@ -56,7 +56,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     get "/users/#{user.id}"
     assert_response :success
-    assert_equal user.email, json_response["email"]
+    assert_equal user.email, api_response["email"]
   end
 
   test "the authenticated user can only look up themselves" do
@@ -73,7 +73,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user = create(:user)
     get "/users/#{user.id}"
     assert_response :success
-    assert_equal user.email, json_response["email"]
+    assert_equal user.email, api_response["email"]
   end
 
   test "looking up a specific user with client auth requires a blessed client" do

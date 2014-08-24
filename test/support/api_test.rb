@@ -15,8 +15,6 @@ module APITest
 
   module TestModule
 
-    private
-
     def assert_request_id_header
       assert response.headers.has_key?("X-Request-Id")
       assert_match /\w{8}\-(\w{4}\-){3}\w{12}/, response.headers["X-Request-Id"]
@@ -77,10 +75,6 @@ module APITest
 
     def encode_credentials(user, pass)
       ActionController::HttpAuthentication::Basic.encode_credentials(user, pass)
-    end
-
-    def json_response
-      @json_response ||= JSON.parse(response.body)
     end
   end
 end

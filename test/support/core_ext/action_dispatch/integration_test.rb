@@ -17,14 +17,18 @@ class ActionDispatch::IntegrationTest
   def assert_error(status, message: message, no_body: false)
     assert_response status
     if no_body
-      assert_not_nil json_response["errors"]
+      assert_not_nil api_response["errors"]
     else
-      assert_equal Rack::Utils::SYMBOL_TO_STATUS_CODE[status], json_response["errors"]["status"]
-      assert_equal message, json_response["errors"]["message"] if message
+      assert_equal Rack::Utils::SYMBOL_TO_STATUS_CODE[status], api_response["errors"]["status"]
+      assert_equal message, api_response["errors"]["message"] if message
     end
   end
 
   private
+
+  def api_response
+    @api_response ||= JSON.parse(response.body)
+  end
 
   def model_under_test
     @modal_under_test ||= begin
