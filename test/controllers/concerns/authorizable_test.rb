@@ -9,11 +9,15 @@ class AuthorizableTest < ActionController::TestCase
     deny(:new)    { !blessed_app? }
 
     def index
-      head 200
+      head :ok
     end
 
     def new
-      head 200
+      head :ok
+    end
+
+    def render_denied
+      head :forbidden
     end
   end
 

@@ -55,7 +55,8 @@ module V1
 
     def ensure_no_site_ownership
       user = User.find(params[:id])
-      head(:precondition_failed) if user.owned_sites.any?
+      message = "User owns one or more sites"
+      render_error(message, status: :precondition_failed) if user.owned_sites.any?
     end
   end
 end

@@ -64,6 +64,8 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     get "/sites/#{site.id}"
     assert_response :forbidden
+    assert_equal 403, json_response["errors"]["status"]
+    assert_equal "Permission denied", json_response["errors"]["message"]
   end
 
   test "a blessed app can get any site" do
@@ -82,6 +84,8 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     get "/sites/0"
     assert_response :not_found
+    assert_equal 404, json_response["errors"]["status"]
+    assert_equal "Site not found", json_response["errors"]["message"]
   end
 
   test "getting a site requires blessed app or user authentication" do
@@ -92,6 +96,8 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     get "/sites/#{site.id}"
     assert_response :forbidden
+    assert_equal 403, json_response["errors"]["status"]
+    assert_equal "Permission denied", json_response["errors"]["message"]
   end
 
   test "users can create sites" do
@@ -119,6 +125,8 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     assert_no_difference "Site.count" do
       post "/sites", site_params
       assert_response :not_found
+      assert_equal 404, json_response["errors"]["status"]
+      assert_equal "Owner not found", json_response["errors"]["message"]
     end
   end
 
@@ -137,6 +145,8 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     assert_no_difference ["Site.count"] do
       post "/sites", site_params
       assert_response :forbidden
+      assert_equal 403, json_response["errors"]["status"]
+      assert_equal "Permission denied", json_response["errors"]["message"]
     end
   end
 
@@ -146,12 +156,14 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     assert_no_difference "Site.count" do
       post "/sites", site_params(name: "")
       assert_response :unprocessable_entity
+      assert_not_nil json_response["errors"]
     end
 
     site = create(:site, owner: user)
     assert_no_difference "Site.count" do
       post "/sites", site_params(name: site.name)
       assert_response :unprocessable_entity
+      assert_not_nil json_response["errors"]
     end
   end
 
@@ -181,6 +193,8 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     patch "/sites/#{site.id}", site_params(name: "Something New")
     assert_response :forbidden
+    assert_equal 403, json_response["errors"]["status"]
+    assert_equal "Permission denied", json_response["errors"]["message"]
   end
 
   test "a blessed app can update any site" do
@@ -199,10 +213,12 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     patch "/sites/#{site.id}", site_params(name: "")
     assert_response :unprocessable_entity
+    assert_not_nil json_response["errors"]
 
     new_site = make_site(user)
     patch "/sites/#{new_site.id}", site_params(name: site.name)
     assert_response :unprocessable_entity
+    assert_not_nil json_response["errors"]
   end
 
   test "updating a site requires blessed app or client_auth" do
@@ -213,6 +229,8 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     patch "/sites/#{site.id}", site_params
     assert_response :forbidden
+    assert_equal 403, json_response["errors"]["status"]
+    assert_equal "Permission denied", json_response["errors"]["message"]
   end
 
   test "a site owner can destroy a site" do
@@ -231,6 +249,8 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     assert_no_difference "Site.count" do
       delete "/sites/#{site.id}"
       assert_response :forbidden
+      assert_equal 403, json_response["errors"]["status"]
+      assert_equal "Permission denied", json_response["errors"]["message"]
     end
   end
 
@@ -256,6 +276,8 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     assert_no_difference "Site.count" do
       delete "/sites/#{site.id}"
       assert_response :forbidden
+      assert_equal 403, json_response["errors"]["status"]
+      assert_equal "Permission denied", json_response["errors"]["message"]
     end
   end
 
@@ -266,6 +288,8 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     assert_no_difference "Site.count" do
       delete "/sites/0"
       assert_response :not_found
+      assert_equal 404, json_response["errors"]["status"]
+      assert_equal "Site not found", json_response["errors"]["message"]
     end
   end
 
