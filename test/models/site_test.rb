@@ -28,4 +28,15 @@ class SiteTest < ActiveSupport::TestCase
 
     assert_equal 1, new_site.users.size
   end
+
+  test "api serialization is legit" do
+    user = create(:user)
+    site = create(:site, owner: user)
+    site_attrs = [:id, :name, :description, :created_at, :updated_at]
+
+    expected = site.attributes.select { |attr, _| site_attrs.include?(attr) }
+    expected[:owner] = { id: user.id }
+
+    assert_json(site, expect: expected)
+  end
 end
