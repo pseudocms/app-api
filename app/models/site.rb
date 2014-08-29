@@ -1,4 +1,6 @@
 class Site < ActiveRecord::Base
+  default_scope -> { order(:id) }
+
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
   has_and_belongs_to_many :users
 
@@ -9,6 +11,6 @@ class Site < ActiveRecord::Base
   private
 
   def ensure_user_mapping
-    users << User.find(owner.id)
+    users << owner
   end
 end
