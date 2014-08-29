@@ -10,7 +10,7 @@ gem "devise"
 gem "doorkeeper"
 
 gem "figaro"
-gem "will_paginate", github: "pseudomuto/will_paginate", ref: "first_last_page_predicates_for_collection"
+gem "kaminari"
 
 group :development do
   gem "spring"
