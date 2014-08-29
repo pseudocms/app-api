@@ -8,11 +8,8 @@ module Paginator
 
   def paginate(resource, base_uri = '')
     page_params = paginator_params
-    page = [page_params[:page], 1].max
-    per_page = [page_params[:per_page], max_per_page].min
-
-    collection = resource.page(page).per(per_page)
-    set_link_header(base_uri, collection, per_page)
+    collection = resource.page(page_params[:page]).per(page_params[:per_page])
+    set_link_header(base_uri, collection, page_params[:per_page])
     collection
   end
 
@@ -20,16 +17,14 @@ module Paginator
     Kaminari.config.max_per_page
   end
 
-  def query_for_page(page, per_page)
-    "?page=#{page}&per_page=#{per_page}"
-  end
-
   private
 
   def paginator_params
-    supplied_params = params.permit(:page, :per_page)
-    page_params = PAGINATOR_DEFAULTS.merge(supplied_params).symbolize_keys
-    Hash[page_params.map { |key, value| [key, Integer(value)] }]
+    page_params = PAGINATOR_DEFAULTS.merge(params.permit(:page, :per_page)).symbolize_keys
+    Hash[page_params.map { |key, value| [key, Integer(value)] }].tap do |hash|
+      hash[:page] = [hash[:page], 1].max
+      hash[:per_page] = [hash[:per_page], max_per_page].min
+    end
   end
 
   def set_link_header(base_uri, collection, per_page)
@@ -44,13 +39,17 @@ module Paginator
     {}.tap do |pages|
       unless collection.first_page?
         pages[:first] = 1
-        pages[:prev] = collection.current_page - 1
+        pages[:prev] = collection.prev_page
       end
 
       unless collection.last_page?
         pages[:last] = collection.total_pages
-        pages[:next] = collection.current_page + 1
+        pages[:next] = collection.next_page
       end
     end
+  end
+
+  def query_for_page(page, per_page)
+    "?page=#{page}&per_page=#{per_page}"
   end
 end

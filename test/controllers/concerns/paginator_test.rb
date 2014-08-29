@@ -7,10 +7,6 @@ class PaginatorTest < ActiveSupport::TestCase
     def response
       @response ||= ActionDispatch::Response.new
     end
-
-    def url_for_page(page, per_page)
-      ''
-    end
   end
 
   test '#paginate calls paginate on supplied resource' do
@@ -55,9 +51,9 @@ class PaginatorTest < ActiveSupport::TestCase
   def expect_paginate(collection, page: page, per_page: per_page)
     page ||=  Paginator::PAGINATOR_DEFAULTS[:page]
     per_page ||= Paginator::PAGINATOR_DEFAULTS[:per_page]
+
     result = collection_stub
     result.expects(:per).returns(result)
-
     collection.expects(:page).with(page).returns(result)
   end
 
