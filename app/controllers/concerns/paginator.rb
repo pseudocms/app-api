@@ -1,25 +1,23 @@
 module Paginator
   extend ActiveSupport::Concern
 
-  DEFAULT_MAX_PER_PAGE = 100
-
   PAGINATOR_DEFAULTS = {
     page: 1,
-    per_page: WillPaginate.per_page
+    per_page: Kaminari.config.default_per_page
   }
 
   def paginate(resource, base_uri = '')
     page_params = paginator_params
-    page_params[:page] = [page_params[:page], 1].max
-    page_params[:per_page] = [page_params[:per_page], max_per_page].min
+    page = [page_params[:page], 1].max
+    per_page = [page_params[:per_page], max_per_page].min
 
-    collection = resource.paginate(page_params)
-    set_link_header(base_uri, collection, page_params[:per_page])
+    collection = resource.page(page).per(per_page)
+    set_link_header(base_uri, collection, per_page)
     collection
   end
 
   def max_per_page
-    DEFAULT_MAX_PER_PAGE
+    Kaminari.config.max_per_page
   end
 
   def query_for_page(page, per_page)

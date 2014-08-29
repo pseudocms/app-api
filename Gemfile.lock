@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/pseudomuto/will_paginate.git
-  revision: c659902cc93e1dab06bd9595b3ccd22bd6be4cdb
-  ref: first_last_page_predicates_for_collection
-  specs:
-    will_paginate (3.0.4)
-
-GIT
   remote: git://github.com/rails-api/rails-api.git
   revision: b2dee24b0b66ce0ee43eaec6aab2e0686e58049f
   specs:
@@ -71,6 +64,9 @@ GEM
     hike (1.2.3)
     i18n (0.6.11)
     json (1.8.1)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.9.2)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -156,6 +152,7 @@ DEPENDENCIES
   doorkeeper
   factory_girl_rails
   figaro
+  kaminari
   mocha
   pg
   pry-byebug
@@ -165,4 +162,3 @@ DEPENDENCIES
   spring
   spring-commands-testunit
   unicorn-rails
-  will_paginate!
