@@ -8,14 +8,14 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user_auth(:david)
 
     get "/users"
-    assert_response :forbidden
+    assert_permission_denied
   end
 
   test "getting all users requires the authenticated client to be blessed" do
     client_auth
 
     get "/users"
-    assert_response :forbidden
+    assert_permission_denied
   end
 
   test "getting all users returns users" do
@@ -24,8 +24,8 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     get "/users"
     assert_response :ok
-    assert_kind_of Array, json_response
-    assert json_response.size > 0
+    assert_kind_of Array, api_response
+    assert api_response.size > 0
   end
 
   test "getting all users sets the link header" do
@@ -41,14 +41,14 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     get "/user"
     assert_response :success
-    assert_equal User.find_by_email("david@pseudocms.com").email, json_response["email"]
+    assert_equal User.find_by_email("david@pseudocms.com").email, api_response["email"]
   end
 
   test "/user requires an authenticated user" do
     client_auth
 
     get "/user"
-    assert_response :forbidden
+    assert_permission_denied
   end
 
   test "the authenticated user can look up themselves" do
@@ -56,7 +56,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     get "/users/#{user.id}"
     assert_response :success
-    assert_equal user.email, json_response["email"]
+    assert_equal user.email, api_response["email"]
   end
 
   test "the authenticated user can only look up themselves" do
@@ -64,7 +64,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = create(:user)
     get "/users/#{user.id}"
-    assert_response :forbidden
+    assert_permission_denied
   end
 
   test "blessed clients can look up a specific user" do
@@ -73,7 +73,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user = create(:user)
     get "/users/#{user.id}"
     assert_response :success
-    assert_equal user.email, json_response["email"]
+    assert_equal user.email, api_response["email"]
   end
 
   test "looking up a specific user with client auth requires a blessed client" do
@@ -81,21 +81,21 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = create(:user)
     get "/users/#{user.id}"
-    assert_response :forbidden
+    assert_permission_denied
   end
 
   test "creating a user requires client authentication" do
     user_auth(:david)
 
     post "/users", user_params
-    assert_response :forbidden
+    assert_permission_denied
   end
 
   test "creating a user requires a blessed client" do
     client_auth
 
     post "/users", user_params
-    assert_response :forbidden
+    assert_permission_denied
   end
 
   test "creating a user succeeds with valid parameters" do
@@ -113,12 +113,12 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     assert_no_difference "User.count" do
       post "/users", user_params(email: user.email)
-      assert_response :unprocessable_entity
+      assert_error(:unprocessable_entity, no_body: true)
     end
 
     assert_no_difference "User.count" do
       post "/users", user_params(password: "")
-      assert_response :unprocessable_entity
+      assert_error(:unprocessable_entity, no_body: true)
     end
   end
 
@@ -134,7 +134,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user = user_auth(:david)
 
     patch "/users/#{user.id}", user_params(password: "")
-    assert_response 422
+    assert_error(:unprocessable_entity, no_body: true)
   end
 
   test "a user can only update their own account" do
@@ -142,7 +142,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = create(:user)
     patch "/users/#{user.id}", user_params
-    assert_response :forbidden
+    assert_permission_denied
   end
 
   test "a blessed client can update any user account" do
@@ -154,12 +154,12 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     assert_equal user_params[:email], user.reload.email
   end
 
-  test "normal clients can\"t update a user" do
+  test "normal clients can't update a user" do
     client_auth
 
     user = create(:user)
     patch "/users/#{user.id}", user_params
-    assert_response :forbidden
+    assert_permission_denied
   end
 
   test "a blessed client can delete a user account" do
@@ -172,12 +172,12 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "a 404 is returned when deleting a user that doesn\"t exist" do
+  test "a 404 is returned when deleting a user that doesn't exist" do
     client_auth(blessed: true)
 
     assert_no_difference "User.count" do
       delete "/users/0"
-      assert_response :not_found
+      assert_not_found
     end
   end
 
@@ -189,17 +189,17 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     assert_no_difference "User.count" do
       delete "/users/#{user.id}"
-      assert_response :precondition_failed
+      assert_error(:precondition_failed, message: "User owns one or more sites")
     end
   end
 
-  test 'non-blessed clients can\'t delete a user' do
+  test "non-blessed clients can't delete a user" do
     client_auth
 
     user = create(:user)
     assert_no_difference "User.count" do
       delete "/users/#{user.id}"
-      assert_response :forbidden
+      assert_permission_denied
     end
   end
 

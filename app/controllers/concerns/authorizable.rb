@@ -4,13 +4,13 @@ module Authorizable
   module ClassMethods
     def allow(action, &block)
       before_action only: [action] do
-        head(:forbidden) unless instance_eval(&block)
+        render_denied unless instance_eval(&block)
       end
     end
 
     def deny(action, &block)
       before_action only: [action] do
-        head(:forbidden) if instance_eval(&block)
+        render_denied if instance_eval(&block)
       end
     end
   end

@@ -6,8 +6,9 @@ module V1
     allow(:update)  { blessed_or_user? }
     allow(:destroy) { blessed_or_user? }
 
-    before_action :blessed_or_associated?, only: [:show, :update]
-    before_action :blessed_or_owner?, only: [:destroy]
+    before_action :ensure_blessed_or_associated?, only: [:show, :update]
+    before_action :ensure_blessed_or_owner?, only: [:destroy]
+    before_action :ensure_owner_exists, only: [:create], if: :blessed_app?
 
     # GET /sites
     def index
@@ -59,12 +60,18 @@ module V1
       blessed_app? || current_user
     end
 
-    def blessed_or_owner?
-      head(:forbidden) unless blessed_app? || site.user_id == current_user.id
+    def ensure_blessed_or_owner?
+      render_denied unless blessed_app? || site.user_id == current_user.id
     end
 
-    def blessed_or_associated?
-      head(:forbidden) unless blessed_app? || site.users.include?(current_user)
+    def ensure_blessed_or_associated?
+      render_denied unless blessed_app? || site.users.include?(current_user)
+    end
+
+    def ensure_owner_exists
+      User.find(owner_params[:owner_id])
+    rescue ActiveRecord::RecordNotFound
+      render_error("Owner not found", status: :not_found)
     end
   end
 end

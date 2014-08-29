@@ -8,99 +8,39 @@ module APITest
         version
       end
 
-      send(:include, APITestHelpers)
-    end
-
-    def pagination_test(setup_method)
-      define_method :pagination_setup do |page, per_page|
-        send(setup_method, page, per_page)
-      end
-
-      send(:include, PagingTestHelpers)
+      send(:include, APITest::TestHelpers)
+      send(:include, APITest::TestModule)
     end
   end
 
-  module PagingTestHelpers
-    def test_pagination_for_first_page
-      pagination_setup(1, 1)
-      assert_response :ok
+  module TestModule
 
-      refute page_links.has_key?(:first)
-      refute page_links.has_key?(:prev)
-      assert page_links.has_key?(:next)
-      assert page_links.has_key?(:last)
-    end
-
-    def test_pagination_for_middle_page
-      pagination_setup(2, 1)
-      assert_response :ok
-
-      assert page_links.has_key?(:first)
-      assert page_links.has_key?(:prev)
-      assert page_links.has_key?(:next)
-      assert page_links.has_key?(:last)
-    end
-
-    def test_pagination_for_last_page
-      last_page = last_page_number
-      pagination_setup(last_page, 1)
-      assert_response :ok
-
-      assert page_links.has_key?(:first)
-      assert page_links.has_key?(:prev)
-      refute page_links.has_key?(:next)
-      refute page_links.has_key?(:last)
-    end
-
-    private
-
-    LINK_HEADER_PATTERN = /\A<([^>]+)>;\s*rel="(.*)"\z/
-
-    def page_links
-      @page_links ||= begin
-        headers = response.headers['Link'].split(',').map(&:strip)
-        {}.tap do |links|
-          headers.each do |header|
-            if LINK_HEADER_PATTERN =~ header
-              links[$2] = $1
-            end
-          end
-
-          links.symbolize_keys!
-        end
-      end
-    end
-
-    def last_page_number
-      last_page = 0
-
-      ActiveRecord::Base.transaction do
-        pagination_setup(1, 1)
-        last_page = page_links[:last][/page=(\d+)/][$1]
-        raise ActiveRecord::Rollback, "rolling it back"
-      end
-
-      @page_links = nil
-      last_page
+    def assert_request_id_header
+      assert response.headers.has_key?("X-Request-Id")
+      assert_match /\w{8}\-(\w{4}\-){3}\w{12}/, response.headers["X-Request-Id"]
     end
   end
 
-  module APITestHelpers
+  module TestHelpers
 
     def post(uri, params = {}, headers = {})
       super(uri, params, default_headers.merge(headers))
+      assert_request_id_header
     end
 
     def get(uri, params = {}, headers = {})
       super(uri, params, default_headers.merge(headers))
+      assert_request_id_header
     end
 
     def patch(uri, params = {}, headers = {})
       super(uri, params, default_headers.merge(headers))
+      assert_request_id_header
     end
 
     def delete(uri, params = {}, headers = {})
       super(uri, params, default_headers.merge(headers))
+      assert_request_id_header
     end
 
     private
@@ -136,13 +76,5 @@ module APITest
     def encode_credentials(user, pass)
       ActionController::HttpAuthentication::Basic.encode_credentials(user, pass)
     end
-
-    def json_response
-      @json_response ||= JSON.parse(response.body)
-    end
   end
-end
-
-class ActionDispatch::IntegrationTest
-  include APITest
 end
