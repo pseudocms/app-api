@@ -1,11 +1,14 @@
+require "application_responder"
+
 class ApplicationController < ActionController::API
-  include ActionController::MimeResponds
+  self.responder = ApplicationResponder
+  respond_to :json
+
   include ActionController::ImplicitRender
   include ActionController::StrongParameters
   include Authorizable
   include Paginator
 
-  respond_to :json
   doorkeeper_for :all
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
