@@ -10,7 +10,6 @@ gem "unicorn-rails"
 gem "devise"
 gem "doorkeeper"
 
-gem "figaro"
 gem "kaminari"
 
 group :development do

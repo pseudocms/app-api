@@ -65,9 +65,6 @@ GEM
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
-    figaro (0.7.0)
-      bundler (~> 1.0)
-      rails (>= 3, < 5)
     globalid (0.2.3)
       activesupport (>= 4.1.0)
     hike (1.2.3)
@@ -167,7 +164,6 @@ DEPENDENCIES
   devise
   doorkeeper
   factory_girl_rails
-  figaro
   kaminari
   mocha
   pg
