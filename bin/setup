@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+require 'pathname'
+
+APP_ROOT     = Pathname.new File.expand_path('../../',  __FILE__)
+CONFIG_FILES = %w(config/database.yml config/application.yml)
+GIT_REMOTES  = { production: "git@heroku.com:pseudocms-api.git" }
+
+Dir.chdir APP_ROOT do
+  puts "== Installing dependencies =="
+  system "gem install bundler --conservative"
+  system "bundle check || bundle install"
+
+  puts "\n== Copying sample files =="
+  CONFIG_FILES.each do |config_file|
+    system "cp #{config_file}.example #{config_file}" unless File.exist?(config_file)
+  end
+
+  puts "\n== Setting up Git Remotes =="
+  GIT_REMOTES.each do |name, repo|
+    system "git remote add #{name} #{repo}"
+  end
+
+  puts "\n== Preparing database =="
+  system "bin/rake db:setup"
+
+  puts "\n== Removing old logs and tempfiles =="
+  system "rm -f log/*"
+  system "rm -rf tmp/cache"
+
+  puts "\n== Restarting application server =="
+  system "touch tmp/restart.txt"
+end
