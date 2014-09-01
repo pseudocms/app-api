@@ -5,5 +5,5 @@ APP_ROOT     = Pathname.new File.expand_path('../../',  __FILE__)
 
 Dir.chdir APP_ROOT do
   puts "\n== Deploying the application =="
-  system "git push production master"
+  system "git push production master #{(ARGV || []).join(" ")}"
 end
