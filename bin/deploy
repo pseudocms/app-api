@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require 'pathname'
+
+APP_ROOT     = Pathname.new File.expand_path('../../',  __FILE__)
+
+Dir.chdir APP_ROOT do
+  puts "\n== Deploying the application =="
+  system "git push production master"
+end
