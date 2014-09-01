@@ -26,12 +26,8 @@ Tested against Ruby 2.1.2
 
 ### Configuration
 
-* Initial setup: `script/setup`
+* Initial setup: `bin/setup`
 * Alter _config/database.yml_ and _config/application.yml_ as necessary
-
-### Database creation
-
-`rake db:setup`
 
 ### How to run the test suite
 
