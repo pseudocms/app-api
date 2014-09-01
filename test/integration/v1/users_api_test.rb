@@ -28,14 +28,6 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     assert api_response.size > 0
   end
 
-  test "getting all users sets the link header" do
-    client_auth(blessed: true)
-
-    get "/users"
-    assert_response :ok
-    assert response.headers.has_key?("Link")
-  end
-
   test "GET /user returns the currently logged in user" do
     user_auth(:david)
 
@@ -126,7 +118,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user = user_auth(:david)
 
     patch "/users/#{user.id}", user_params
-    assert_response :success
+    assert_successful_update
     assert_equal user_params[:email], user.reload.email
   end
 
@@ -150,7 +142,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
 
     user = create(:user, email: "david@pseudocms.com")
     patch "/users/#{user.id}", user_params
-    assert_response :success
+    assert_successful_update
     assert_equal user_params[:email], user.reload.email
   end
 
@@ -168,7 +160,7 @@ class V1::UserAPITest < ActionDispatch::IntegrationTest
     user = create(:user)
     assert_difference "User.count", -1 do
       delete "/users/#{user.id}"
-      assert_response :no_content
+      assert_successful_delete
     end
   end
 

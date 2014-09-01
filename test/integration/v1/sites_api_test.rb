@@ -160,7 +160,7 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     site = make_site(user)
 
     patch "/sites/#{site.id}", site_params(name: "silly_site", description: "desc")
-    assert_response :success
+    assert_successful_update
 
     site.reload
     assert_equal "silly_site", site.name
@@ -172,7 +172,7 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     site = make_site(user, users: [user, other_user])
 
     patch "/sites/#{site.id}", site_params(name: "updated_site")
-    assert_response :success
+    assert_successful_update
   end
 
   test "a user that is not associated with a site cannot update it" do
@@ -190,7 +190,7 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
     site = make_site(user)
 
     patch "/sites/#{site.id}", site_params(name: "New Name")
-    assert_response :success
+    assert_successful_update
   end
 
   test "updating a site fails with invalid parameters" do
@@ -221,6 +221,7 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     assert_difference "Site.count", -1 do
       delete "/sites/#{site.id}"
+      assert_successful_delete
     end
   end
 
@@ -242,7 +243,7 @@ class V1::SitesAPITest < ActionDispatch::IntegrationTest
 
     assert_difference "Site.count", -1 do
       delete "/sites/#{site.id}"
-      assert_response :no_content
+      assert_successful_delete
     end
   end
 
