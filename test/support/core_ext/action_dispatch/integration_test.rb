@@ -5,6 +5,10 @@ class ActionDispatch::IntegrationTest
   include APITest
   include PaginationTest
 
+  setup do
+    https!
+  end
+
   def assert_successful_update
     assert_response :no_content
     assert response.body.blank?
