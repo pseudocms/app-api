@@ -5,6 +5,12 @@ class ActionDispatch::IntegrationTest
   include APITest
   include PaginationTest
 
+  def assert_successful_update
+    assert_response :no_content
+    assert response.body.blank?
+  end
+  alias_method :assert_successful_delete, :assert_successful_update
+
   def assert_permission_denied
     assert_error(:forbidden, message: "Permission denied")
   end
@@ -24,11 +30,11 @@ class ActionDispatch::IntegrationTest
     end
   end
 
-  private
-
   def api_response
     @api_response ||= JSON.parse(response.body)
   end
+
+  private
 
   def model_under_test
     @modal_under_test ||= begin
