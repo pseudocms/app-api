@@ -1,5 +1,5 @@
 module V1
-  class UsersController < ApplicationController
+  class UsersController < ApiController
     allow(:index)   { blessed_app? }
     allow(:user)    { current_user }
     allow(:show)    { blessed_app? || account_owner? }

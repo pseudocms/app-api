@@ -1,5 +1,5 @@
 module V1
-  class SitesController < ApplicationController
+  class SitesController < ApiController
     allow(:index)   { blessed_or_user? }
     allow(:show)    { blessed_or_user? }
     allow(:create)  { blessed_or_user? }
