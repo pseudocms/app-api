@@ -11,6 +11,7 @@ gem "doorkeeper"
 gem "kaminari"
 
 gem "turbolinks"
+gem "react-rails", "~> 1.0.0.pre", github: "reactjs/react-rails"
 
 group :development do
   gem "thin"
