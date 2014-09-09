@@ -5,7 +5,6 @@ gem "rails", "4.2.0.beta1"
 gem "rails-api", github: "rails-api/rails-api"
 gem "responders", "~> 2.0"
 gem "pg"
-gem "unicorn-rails"
 
 gem "devise"
 gem "doorkeeper"
@@ -13,6 +12,7 @@ gem "doorkeeper"
 gem "kaminari"
 
 group :development do
+  gem "thin"
   gem "spring"
   gem "pry-byebug"
   gem "spring-commands-testunit"
@@ -24,5 +24,6 @@ group :test do
 end
 
 group :production do
+  gem "unicorn"
   gem "rails_12factor"
 end
