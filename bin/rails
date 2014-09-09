@@ -3,6 +3,20 @@ begin
   load File.expand_path("../spring", __FILE__)
 rescue LoadError
 end
+
+if ENV["RAILS_ENV"] == "development" || ENV["RAILS_ENV"].nil?
+  require "rails/commands/server"
+  module Rails
+    class Server
+      alias_method :original_default_options, :default_options
+
+      def default_options
+        original_default_options.merge(Host: "0.0.0.0")
+      end
+    end
+  end
+end
+
 APP_PATH = File.expand_path('../../config/application',  __FILE__)
 require_relative '../config/boot'
 require 'rails/commands'
