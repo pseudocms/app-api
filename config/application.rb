@@ -19,5 +19,7 @@ module Api
     # force after_commit callbacks to raise since this will
     # become the default
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.browserify_rails.commandline_options = "--extension \".js.jsx\""
   end
 end

@@ -1,0 +1,20 @@
+//= require jquery-2.1.1
+//= require lodash-2.4.1
+//= require turbolinks
+
+<%
+  components = Dir["#{Rails.root}/app/assets/javascripts/components/**/*.js.jsx"].map do |file|
+    File.basename(file, ".js.jsx")
+  end
+%>
+
+var React = require("react");
+
+var components = {}
+<% components.each do |file| %>
+components["<%= file.camelize %>"] = require("./components/<%= file %>");
+<% end %>
+
+window.renderComponent = function(name, element) {
+  React.renderComponent(components[name](), element);
+};

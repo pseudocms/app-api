@@ -15,6 +15,9 @@ Dir.chdir APP_ROOT do
     system "cp #{config_file}.example #{config_file}" unless File.exist?(config_file)
   end
 
+  puts "\n== Installing NPM Modules =="
+  system "bin/rake npm:install"
+
   puts "\n== Setting up Git Remotes =="
   GIT_REMOTES.each do |name, repo|
     system "git remote add #{name} #{repo}"

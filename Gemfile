@@ -9,12 +9,12 @@ gem "pg"
 gem "devise"
 gem "doorkeeper"
 gem "kaminari"
+gem "browserify-rails"
 
 gem "turbolinks"
 gem "sass"
 gem "bourbon"
 gem "font-awesome-rails"
-gem "react-rails", "~> 1.0.0.pre", github: "reactjs/react-rails"
 
 group :development do
   gem "thin"

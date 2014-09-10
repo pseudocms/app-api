@@ -1,0 +1,19 @@
+{
+  "name": "pseudocms",
+  "author": "David Muto",
+  "repository": "https://github.com/pseudocms/app-api",
+  "dependencies": {
+    "react": "~> 0.11.0"
+  },
+  "devDependencies" : {
+    "browserify": "~> 4.2",
+    "reactify": "~> 0.14.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "browserify": {
+    "transform": ["reactify"]
+  }
+}

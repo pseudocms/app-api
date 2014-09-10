@@ -1,8 +1,10 @@
-###* @jsx React.DOM ###
+/** @jsx React.DOM */
 
-@LoginForm = React.createClass
-  render: ->
-    `(
+var React = require("react");
+
+var LoginForm = React.createClass({
+  render: function() {
+    return (
       <section className="card card--login">
         <header className="card__header">
           <h1><i className="fa fa-lock"></i>Please Login</h1>
@@ -23,4 +25,8 @@
           </div>
         </section>
       </section>
-    )`
+    );
+  }
+});
+
+module.exports = LoginForm;
