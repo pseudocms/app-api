@@ -1,0 +1,25 @@
+.form {
+  .form__field, .form__field--actions {
+    @include clearfix;
+    margin-top: em(20);
+  }
+
+  .form__field {
+    .form__label {
+      display: inline-block;
+      float: left;
+      width: 25%;
+      margin-top: em(3);
+      padding: em(3);
+    }
+
+    .form__input {
+      font-size: em(16);
+      padding: em(4);
+    }
+  }
+
+  .form__field--actions {
+    text-align: right;
+  }
+}

@@ -7,7 +7,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= yield %>
+  <div class="page">
+
+    <section class="container">
+      <%= yield %>
+    </section>
+  </div>
 
   <%= javascript_include_tag "application", "data-track-turbolinks" => true %>
 </body>
