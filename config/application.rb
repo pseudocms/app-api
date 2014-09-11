@@ -20,6 +20,6 @@ module Api
     # become the default
     config.active_record.raise_in_transactional_callbacks = true
 
-    config.browserify_rails.commandline_options = "--extension \".js.jsx\""
+    config.browserify_rails.commandline_options = "-t coffeeify --extension \".coffee\" --extension \".js.jsx\""
   end
 end
