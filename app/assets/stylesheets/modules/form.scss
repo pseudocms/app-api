@@ -54,7 +54,7 @@ $invalid_icon:
     border-color: #28921f;
   }
 
-  .form__input.invalid:focus {
+  .form__input.invalid, .form__input.invalid:focus {
     background: #fff url($invalid_icon) no-repeat 98% center;
     box-shadow: 0 0 5px #d45252;
     border-color: #b03535;

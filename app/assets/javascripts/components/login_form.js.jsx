@@ -3,13 +3,14 @@
 var React = require("react");
 var Repository = require("../stores/login_store.coffee");
 var LoginActions = require("../actions/login_actions.coffee");
-var Input = require("./input");
 var Formats = require("../constants/formats.coffee");
+
+var Input = require("./input");
 var Errors = require("./errors");
 
 var LoginForm = React.createClass({
   getInitialState: function() {
-    return { username: "", password: "", errors: [] }
+    return { email: "", password: "", errors: [] }
   },
 
   componentDidMount: function() {
@@ -23,7 +24,7 @@ var LoginForm = React.createClass({
   },
 
   render: function() {
-    var validEmail = this._usernameIsValid();
+    var validEmail = this._emailIsValid();
     var validPassword = this._passwordIsValid();
 
     return (
@@ -36,11 +37,11 @@ var LoginForm = React.createClass({
             <Errors message="Oops! Looks liks something went wrong." errors={this.state.errors} />
             <div className="form__field">
               <label className="form__label" htmlFor="email">Email:</label>
-              <Input valid={validEmail} className="form__input required" value={this.state.username} onChange={this._usernameChanged} placeholder="user@example.com"/>
+              <Input name="email" valid={validEmail} className="form__input required" value={this.state.email} onChange={this._valueChanged} placeholder="user@example.com"/>
             </div>
             <div className="form__field">
               <label className="form__label" htmlFor="password">Password:</label>
-              <Input valid={validPassword} type="password" className="form__input required" value={this.state.password} onChange={this._passwordChanged} />
+              <Input name="password" valid={validPassword} type="password" className="form__input required" value={this.state.password} onChange={this._valueChanged} />
             </div>
             <div className="form__field--actions">
               <button className="btn" onClick={this._login}>Login</button>
@@ -51,15 +52,14 @@ var LoginForm = React.createClass({
     );
   },
 
-  _usernameChanged: function(e) {
-    this.setState({ username: e.target.value });
-  },
-  _passwordChanged: function(e) {
-    this.setState({ password: e.target.value });
+  _valueChanged: function(e) {
+    update = {};
+    update[e.target.name] = e.target.value;
+    this.setState(update);
   },
 
   _login: function() {
-    LoginActions.authenticate(this.state.username, this.state.password);
+    LoginActions.authenticate(this.state.email, this.state.password);
   },
 
   _onLoginSucceeded: function() {
@@ -71,8 +71,8 @@ var LoginForm = React.createClass({
     this.setState({ errors: errors, password: "" });
   },
 
-  _usernameIsValid: function() {
-    return this.state.username.match(Formats.EMAIL_PATTERN);
+  _emailIsValid: function() {
+    return this.state.email.match(Formats.EMAIL_PATTERN);
   },
 
   _passwordIsValid: function() {

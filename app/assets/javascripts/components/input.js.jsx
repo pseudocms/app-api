@@ -4,22 +4,22 @@ var React = require("react");
 
 var Input = React.createClass({
   getInitialState: function() {
-    return { validationStarted: false };
+    return { shouldValidate: false };
   },
 
   componentWillMount: function() {
-    var startValidating = function() {
-      this.setState({ validationStarted: true });
+    var validate = function() {
+      this.setState({ shouldValidate: true });
     }.bind(this);
 
     if (this.props.value) {
-      startValidating();
+      validate();
     } else {
-      this.prepareToValidate = _.debounce(startValidating, 500);
+      this.prepareToValidate = _.debounce(validate, 500);
     }
   },
   handleChanged: function(e) {
-    if(!this.validationStarted) {
+    if(!this.shouldValidate) {
       this.prepareToValidate();
     }
 
@@ -27,7 +27,7 @@ var Input = React.createClass({
   },
   render: function() {
     var className = "";
-    if (this.state.validationStarted) {
+    if (this.state.shouldValidate) {
       className = this.props.valid  ? "valid" : "invalid";
     }
     return this.transferPropsTo(<input className={className} onChange={this.handleChanged} />);
