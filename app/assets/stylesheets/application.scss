@@ -16,8 +16,13 @@ body {
   display: table;
   width: em(980);
   margin: 0 auto;
+  padding: 0 em(10);
 }
+
+@import "layout/header";
 
 @import "modules/btn";
 @import "modules/card";
 @import "modules/form";
+@import "modules/heading";
+@import "modules/link_list";

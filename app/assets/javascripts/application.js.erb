@@ -3,12 +3,18 @@
 //= require turbolinks
 
 <%
-  components = Dir["#{Rails.root}/app/assets/javascripts/components/**/*.js.jsx"].map do |file|
-    File.basename(file, ".js.jsx")
-  end
+  jsx_glob = "#{Rails.root}/app/assets/javascripts/components/**/*.js.jsx"
+  components = Dir[jsx_glob].map { |file| File.basename(file, ".js.jsx") }
 %>
 
 var React = require("react");
+
+function renderReactComponents() {
+  var reactComponents = window.reactComponents || {};
+  Object.keys(reactComponents).map(function(key) {
+    renderComponent(reactComponents[key], document.getElementById(key));
+  });
+}
 
 var components = {}
 <% components.each do |file| %>
@@ -18,3 +24,5 @@ components["<%= file.camelize %>"] = require("./components/<%= file %>");
 window.renderComponent = function(name, element) {
   React.renderComponent(components[name](), element);
 };
+
+renderReactComponents();

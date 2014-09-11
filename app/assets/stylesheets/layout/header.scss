@@ -1,0 +1,28 @@
+$headerHeight: em(60);
+
+.site-header {
+  @include clearfix;
+  background-color: $headerBackgroundColor;
+  height: $headerHeight;
+
+  .site-header__title {
+    display: inline;
+    line-height: 1.75em;
+    padding-left: em(20);
+  }
+
+  .site-header__nav {
+    a {
+      color: #333;
+      height: $headerHeight;
+      line-height: $headerHeight;
+      letter-spacing: em(1);
+      text-transform: uppercase;
+
+      &:hover {
+        background-color: #000;
+        color: #eee;
+      }
+    }
+  }
+}

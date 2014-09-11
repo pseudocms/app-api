@@ -1,12 +1,37 @@
 /** @jsx React.DOM */
 
-var React = require("react");
-var Repository = require("../stores/login_store.coffee");
+var React        = require("react");
+var Repository   = require("../stores/login_store.coffee");
 var LoginActions = require("../actions/login_actions.coffee");
-var Formats = require("../constants/formats.coffee");
+var Formats      = require("../constants/formats.coffee");
+var Input        = require("./input");
+var Errors       = require("./errors");
+var Heading      = require("./heading");
 
-var Input = require("./input");
-var Errors = require("./errors");
+var Card        = require("./card").Card;
+var CardHeader  = require("./card").CardHeader;
+var CardContent = require("./card").CardContent;
+
+var InputField = React.createClass({
+  render: function() {
+    return (
+      <div className="form__field">
+        <label className="form__label" htmlFor={this.props.name}>{this.props.label}</label>
+        {this.transferPropsTo(<Input type={this.props.name} className="form__input required" />)}
+      </div>
+    );
+  }
+});
+
+var LoginButton = React.createClass({
+  render: function() {
+    return (
+      <div className="form__field--actions">
+        {this.transferPropsTo(<button className="btn">Login</button>)}
+      </div>
+    );
+  }
+});
 
 var LoginForm = React.createClass({
   getInitialState: function() {
@@ -28,27 +53,19 @@ var LoginForm = React.createClass({
     var validPassword = this._passwordIsValid();
 
     return (
-      <section className="card card--login">
-        <header className="card__header">
-          <h1><i className="fa fa-lock"></i>Please Login</h1>
-        </header>
-        <section className="card__content">
+      <Card className="card--login">
+        <CardHeader>
+          <Heading iconType="fa-lock" text="Please Login" />
+        </CardHeader>
+        <CardContent>
           <div className="form">
             <Errors message="Oops! Looks liks something went wrong." errors={this.state.errors} />
-            <div className="form__field">
-              <label className="form__label" htmlFor="email">Email:</label>
-              <Input name="email" valid={validEmail} className="form__input required" value={this.state.email} onChange={this._valueChanged} placeholder="user@example.com"/>
-            </div>
-            <div className="form__field">
-              <label className="form__label" htmlFor="password">Password:</label>
-              <Input name="password" valid={validPassword} type="password" className="form__input required" value={this.state.password} onChange={this._valueChanged} />
-            </div>
-            <div className="form__field--actions">
-              <button className="btn" onClick={this._login}>Login</button>
-            </div>
+            <InputField label="Email" name="email" valid={validEmail} value={this.state.email} onChange={this._valueChanged} placeholder="user@example.com" />
+            <InputField label="Password" name="password" valid={validPassword} value={this.state.password} onChange={this._valueChanged} />
+            <LoginButton onClick={this._login} />
           </div>
-        </section>
-      </section>
+        </CardContent>
+      </Card>
     );
   },
 

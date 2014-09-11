@@ -1,7 +1,1 @@
-<div id="login-form"></div>
-
-<%= content_for(:scripts) do %>
-  <%= javascript_tag do %>
-    renderComponent("LoginForm", document.getElementById("login-form"));
-  <% end %>
-<% end %>
+<%= react_component("LoginForm") %>
