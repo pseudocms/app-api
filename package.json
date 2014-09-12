@@ -9,13 +9,24 @@
   "devDependencies" : {
     "browserify": "~> 4.2",
     "reactify": "~> 0.14.0",
-    "coffeeify": "~> 0.6"
+    "coffeeify": "~> 0.6",
+    "coffee-script": "*",
+    "react-tools": "*",
+    "jest-cli": "*"
   },
   "license": "MIT",
   "engines": {
     "node": ">= 0.10"
   },
+  "scripts": {
+    "test": "jest"
+  },
   "browserify": {
     "transform": ["reactify"]
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
+    "testFileExtensions": ["coffee", "js"]
   }
 }

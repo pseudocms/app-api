@@ -1,7 +1,10 @@
 TOKEN_STORAGE_KEY = "pseudocmstoken"
 
+storage = {}
+storage = localStorage if localStorage?
+
 getAuthToken = ->
-  localStorage[TOKEN_STORAGE_KEY]
+  storage[TOKEN_STORAGE_KEY]
 
 getRequestDefaults = ->
   token = getAuthToken()
@@ -31,7 +34,7 @@ Api =
   put: (url, data) -> makeRequest("PUT", url, data)
   patch: (url, data) -> makeRequest("PATCH", url, data)
   delete: (url, data) -> makeRequest("DELETE", url, data)
-  storeAuthToken: (token) -> localStorage[TOKEN_STORAGE_KEY] = token
-  clearAuthToken: -> delete localStorage[TOKEN_STORAGE_KEY]
+  storeAuthToken: (token) -> storage[TOKEN_STORAGE_KEY] = token
+  clearAuthToken: -> delete storage[TOKEN_STORAGE_KEY]
 
 module.exports = Api

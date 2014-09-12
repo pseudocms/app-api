@@ -4,7 +4,6 @@ class Admin::DashboardControllerTest < ActionController::TestCase
 
   test "GET index" do
     get :index
-    binding.pry
     assert_response :ok
   end
 end
