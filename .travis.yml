@@ -4,6 +4,7 @@ rvm:
   - 2.1.2
 before_install:
   - "echo 'gem: --no-ri --no-rdoc' > ~/.gemrc"
+  - "npm install"
 before_script:
   - psql -c 'create database pseudocms_api_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
