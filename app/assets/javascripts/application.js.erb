@@ -5,23 +5,13 @@
   components = Dir[jsx_glob].map { |file| File.basename(file, ".js.jsx") }
 %>
 
-var React = require("react");
-var _ = require("lodash");
-
-function renderReactComponents() {
-  var reactComponents = window.reactComponents || {};
-  _.forIn(reactComponents, function(value, key) {
-    renderComponent(value, document.getElementById(key));
-  });
-}
+var Initializer = require("./config/initializer")
 
 var components = {}
-<% components.each do |file| %>
-components["<%= file.camelize %>"] = require("./components/<%= file %>");
+<% components.each do |f| %>
+  components["<%= f.camelize %>"] = require("./components/<%= f %>");
 <% end %>
 
-window.renderComponent = function(name, element) {
-  React.renderComponent(components[name](), element);
-};
-
-renderReactComponents();
+Initializer.initialize({
+  components: components
+});

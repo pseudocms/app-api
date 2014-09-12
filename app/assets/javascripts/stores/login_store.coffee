@@ -1,9 +1,9 @@
-merge = require("react/lib/merge")
+merge        = require("react/lib/merge")
 EventEmitter = require("events").EventEmitter
-Dispatcher = require("../dispatcher")
-Constants = require("../constants/login_constants")
-Api = require("../lib/api")
-Routes = require("../lib/routes")
+Dispatcher   = require("../dispatcher")
+Constants    = require("../constants/login_constants")
+Api          = require("../lib/api")
+Routes       = require("./route_store")
 
 SUCCESS_EVENT = "LOGIN_SUCCEEDED"
 FAIL_EVENT = "LOGIN_FAILED"
