@@ -12,7 +12,9 @@
     "coffeeify": "~> 0.6",
     "coffee-script": "*",
     "react-tools": "*",
-    "jest-cli": "*"
+    "jest-cli": "*",
+    "lodash": "~> 2.4.0",
+    "jquery": "~> 2.1.0"
   },
   "license": "MIT",
   "engines": {
@@ -27,6 +29,7 @@
   "jest": {
     "scriptPreprocessor": "<rootDir>/preprocessor.js",
     "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
-    "testFileExtensions": ["coffee", "js"]
+    "testFileExtensions": ["coffee", "js"],
+    "moduleFileExtensions": ["js", "js.jsx", "coffee"]
   }
 }

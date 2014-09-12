@@ -1,6 +1,6 @@
 ###* @jsx React.DOM ###
 
-jest.dontMock("../icon.js.jsx")
+jest.dontMock("../icon")
 
 describe "Icon", ->
   beforeEach ->
@@ -8,14 +8,14 @@ describe "Icon", ->
     @utils = React.addons.TestUtils
 
   it "renders a font-awesome icon", ->
-    Icon = require("../icon.js.jsx")
+    Icon = require("../icon")
 
     icon = @utils.renderIntoDocument(`<Icon />`)
     node = @utils.findRenderedDOMComponentWithTag(icon, "i")
     expect(node.getDOMNode().className).toBe("fa")
 
   it "merges supplied props with icon", ->
-    Icon = require("../icon.js.jsx")
+    Icon = require("../icon")
 
     icon = @utils.renderIntoDocument(`<Icon className="fa-cogs" id="myId" />`)
     node = @utils.findRenderedDOMComponentWithTag(icon, "i").getDOMNode()

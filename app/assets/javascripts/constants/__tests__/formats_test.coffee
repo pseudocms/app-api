@@ -1,10 +1,10 @@
-jest.dontMock("../formats.coffee")
+jest.dontMock("../formats")
 
 describe "Formats", ->
   Formats = null
 
   beforeEach ->
-    Formats = require("../formats.coffee")
+    Formats = require("../formats")
 
   describe "Email pattern", ->
     it "matches valid email addresses", ->

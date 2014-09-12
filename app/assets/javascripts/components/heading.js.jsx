@@ -10,12 +10,14 @@ var Heading = React.createClass({
   },
 
   render: function() {
-    var icon = "";
+    var icon = null;
     if (this.props.iconType) {
-      icon = Icon({ className: this.props.iconType });
+      icon = <Icon className={this.props.iconType} />;
     }
 
-    return this.transferPropsTo(<h1 className="heading">{icon}{this.props.text}</h1>);
+    return this.transferPropsTo(
+      <h1 className="heading">{icon}{this.props.text}</h1>
+    );
   }
 });
 

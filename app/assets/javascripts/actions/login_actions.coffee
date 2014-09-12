@@ -1,5 +1,5 @@
-Dispatcher = require("../dispatcher.coffee")
-Constants = require("../constants/login_constants.coffee")
+Dispatcher = require("../dispatcher")
+Constants = require("../constants/login_constants")
 
 LoginActions =
   authenticate: (username, password) ->

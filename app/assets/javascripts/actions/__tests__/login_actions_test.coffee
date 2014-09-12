@@ -1,4 +1,4 @@
-jest.dontMock("../login_actions.coffee")
+jest.dontMock("../login_actions")
 
 describe "Login Actions", ->
 
@@ -7,8 +7,8 @@ describe "Login Actions", ->
     LoginActions = null
 
     beforeEach ->
-      Dispatcher = require("../../dispatcher.coffee")
-      LoginActions = require("../login_actions.coffee")
+      Dispatcher = require("../../dispatcher")
+      LoginActions = require("../login_actions")
       spyOn(Dispatcher, "dispatchAction")
 
     it "calls Dispatcher#dispatchAction", ->

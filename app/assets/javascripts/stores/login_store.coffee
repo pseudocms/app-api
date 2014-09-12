@@ -1,8 +1,8 @@
 merge = require("react/lib/merge")
 EventEmitter = require("events").EventEmitter
-Dispatcher = require("../dispatcher.coffee")
-Constants = require("../constants/login_constants.coffee")
-Api = require("../lib/api.coffee")
+Dispatcher = require("../dispatcher")
+Constants = require("../constants/login_constants")
+Api = require("../lib/api")
 
 SUCCESS_EVENT = "LOGIN_SUCCEEDED"
 FAIL_EVENT = "LOGIN_FAILED"

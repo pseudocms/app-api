@@ -15,16 +15,25 @@ var ErrorList = React.createClass({
 
 var Errors = React.createClass({
   render: function() {
-    if (!this.props.errors || !this.props.errors.length) {
-      return null;
+    if (this._noErrorsProvided()) return null;
+
+    var message = null;
+    if (this._messageProvided()) {
+      message = <h1>{this.props.message}</h1>;
     }
 
     return (
       <div className="form__errors">
-        <h1>{this.props.message}</h1>
+        {message}
         <ErrorList errors={this.props.errors} />
       </div>
-    )
+    );
+  },
+  _noErrorsProvided: function() {
+    return !(this.props.errors && this.props.errors.length);
+  },
+  _messageProvided: function() {
+    return (this.props.message && this.props.message.length);
   }
 });
 

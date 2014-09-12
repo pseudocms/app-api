@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
 var React        = require("react");
-var Repository   = require("../stores/login_store.coffee");
-var LoginActions = require("../actions/login_actions.coffee");
-var Formats      = require("../constants/formats.coffee");
+var Repository   = require("../stores/login_store");
+var LoginActions = require("../actions/login_actions");
+var Formats      = require("../constants/formats");
 var Input        = require("./input");
 var Errors       = require("./errors");
 var Heading      = require("./heading");

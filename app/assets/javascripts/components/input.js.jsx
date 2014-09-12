@@ -1,8 +1,13 @@
 /** @jsx React.DOM */
 
-var React = require("react");
+var React = require("react/addons");
+var _ = require("lodash");
 
 var Input = React.createClass({
+  propTypes: {
+    valid: React.PropTypes.bool
+  },
+
   getInitialState: function() {
     return { shouldValidate: false };
   },
@@ -15,25 +20,31 @@ var Input = React.createClass({
     if (this.props.value) {
       validate();
     } else {
-      this.prepareToValidate = _.debounce(validate, 500);
+      this._prepareToValidate = _.debounce(validate, 500);
     }
   },
-  handleChanged: function(e) {
-    if(!this.shouldValidate) {
-      this.prepareToValidate();
+  render: function() {
+    var classes = ""
+
+    if (this.state.shouldValidate) {
+      classes = React.addons.classSet({
+        "valid": this.props.valid,
+        "invalid": !this.props.valid
+      });
+    }
+
+    return this.transferPropsTo(<input className={classes} onChange={this._handleChanged} />);
+  },
+
+  _prepareToValidate: function() {},
+
+  _handleChanged: function(e) {
+    if(!this.state.shouldValidate) {
+      this._prepareToValidate();
     }
 
     this.props.onChange && this.props.onChange(e);
-  },
-  render: function() {
-    var className = "";
-    if (this.state.shouldValidate) {
-      className = this.props.valid  ? "valid" : "invalid";
-    }
-    return this.transferPropsTo(<input className={className} onChange={this.handleChanged} />);
-  },
-
-  prepareToValidate: function() {}
+  }
 });
 
 module.exports = Input;

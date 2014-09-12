@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require("react");
+var count = 0;
 
 var Link = React.createClass({
   propTypes: {
@@ -10,7 +11,7 @@ var Link = React.createClass({
 
   render: function() {
     var link  = this.transferPropsTo(<a href={this.props.url}>{this.props.text}</a>);
-    return <li>{link}</li>;
+    return <li key={count++}>{link}</li>;
   }
 });
 

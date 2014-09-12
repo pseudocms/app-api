@@ -1,3 +1,5 @@
+$ = require("jquery")
+
 TOKEN_STORAGE_KEY = "pseudocmstoken"
 
 storage = {}
