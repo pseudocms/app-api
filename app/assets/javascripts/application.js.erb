@@ -6,11 +6,12 @@
 %>
 
 var React = require("react");
+var _ = require("lodash");
 
 function renderReactComponents() {
   var reactComponents = window.reactComponents || {};
-  Object.keys(reactComponents).map(function(key) {
-    renderComponent(reactComponents[key], document.getElementById(key));
+  _.forIn(reactComponents, function(value, key) {
+    renderComponent(value, document.getElementById(key));
   });
 }
 

@@ -1,6 +1,5 @@
 jest.dontMock("../api")
 
-
 sharedRequestMethodBehaviour = (method) ->
   describe "#{method} Requests", ->
     beforeEach ->

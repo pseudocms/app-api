@@ -26,11 +26,7 @@ makeRequest = (method, url, data) ->
   options["data"] = data if data
   $.ajax(options)
 
-Endpoints =
-  LOGIN: "/oauth/token"
-
 Api =
-  Endpoints: Endpoints
   get: (url, data) -> makeRequest("GET", url, data)
   post: (url, data) -> makeRequest("POST", url, data)
   put: (url, data) -> makeRequest("PUT", url, data)
