@@ -26,6 +26,9 @@ makeRequest = (method, url, data) ->
   options["data"] = data if data
   $.ajax(options)
 
+postLogin = ->
+  $("#token").val(getAuthToken()).parents("form:first").submit()
+
 Api =
   get: (url, data) -> makeRequest("GET", url, data)
   post: (url, data) -> makeRequest("POST", url, data)
@@ -34,5 +37,6 @@ Api =
   delete: (url, data) -> makeRequest("DELETE", url, data)
   storeAuthToken: (token) -> storage[TOKEN_STORAGE_KEY] = token
   clearAuthToken: -> delete storage[TOKEN_STORAGE_KEY]
+  postLoginToken: -> postLogin()
 
 module.exports = Api

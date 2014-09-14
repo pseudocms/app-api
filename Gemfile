@@ -21,6 +21,7 @@ group :development do
   gem "spring"
   gem "pry-byebug"
   gem "spring-commands-testunit"
+  gem "web-console", "2.0.0.beta3"
 end
 
 group :test do

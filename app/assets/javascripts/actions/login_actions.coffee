@@ -8,4 +8,8 @@ LoginActions =
       username: username
       password: password
 
+  postToken: ->
+    Dispatcher.dispatchAction
+      actionType: Constants.LOGIN_POST_TOKEN
+
 module.exports = LoginActions

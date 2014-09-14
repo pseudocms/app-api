@@ -23,24 +23,11 @@ module APITest
 
   module TestHelpers
 
-    def post(uri, params = {}, headers = {})
-      super(uri, params, default_headers.merge(headers))
-      assert_request_id_header
-    end
-
-    def get(uri, params = {}, headers = {})
-      super(uri, params, default_headers.merge(headers))
-      assert_request_id_header
-    end
-
-    def patch(uri, params = {}, headers = {})
-      super(uri, params, default_headers.merge(headers))
-      assert_request_id_header
-    end
-
-    def delete(uri, params = {}, headers = {})
-      super(uri, params, default_headers.merge(headers))
-      assert_request_id_header
+    [:get, :post, :patch, :delete].each do |method|
+      define_method(method) do |uri, params = {}, headers = {}|
+        super(uri, params, default_headers.merge(headers))
+        assert_request_id_header
+      end
     end
 
     private

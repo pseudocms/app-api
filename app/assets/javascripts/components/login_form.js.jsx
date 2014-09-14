@@ -65,22 +65,26 @@ var LoginForm = React.createClass({
             <LoginButton onClick={this._login} />
           </div>
         </CardContent>
+        <form action="/admin/login" method="post">
+          <input type="hidden" name="auth_token" />
+        </form>
       </Card>
     );
   },
 
   _valueChanged: function(e) {
-    update = {};
+    var update = {};
     update[e.target.name] = e.target.value;
     this.setState(update);
   },
 
-  _login: function() {
+  _login: function(e) {
+    e.target.blur();
     LoginActions.authenticate(this.state.email, this.state.password);
   },
 
   _onLoginSucceeded: function() {
-    document.location = "/admin";
+    LoginActions.postToken();
   },
 
   _onLoginFailed: function() {
@@ -89,7 +93,7 @@ var LoginForm = React.createClass({
   },
 
   _emailIsValid: function() {
-    return this.state.email.match(Formats.EMAIL_PATTERN);
+    return Formats.EMAIL_PATTERN.test(this.state.email);
   },
 
   _passwordIsValid: function() {

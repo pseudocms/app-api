@@ -40,6 +40,8 @@ Dispatcher.register (payload) ->
   switch action.actionType
     when Constants.LOGIN_AUTHENTICATE
       login(action.username, action.password)
+    when Constants.LOGIN_POST_TOKEN
+      Api.postLoginToken()
 
   true
 

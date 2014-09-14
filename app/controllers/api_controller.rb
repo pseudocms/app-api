@@ -1,7 +1,7 @@
-require "application_responder"
+require "api/responder"
 
 class ApiController < ActionController::API
-  self.responder = ApplicationResponder
+  self.responder = Api::Responder
   respond_to :json
 
   include ActionController::ImplicitRender

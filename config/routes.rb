@@ -21,5 +21,6 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#index"
     get "/login", to: "login#index"
+    post "/login", to: "login#create"
   end
 end
