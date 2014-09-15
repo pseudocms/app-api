@@ -6,6 +6,23 @@ module ReactHelper
     content_tag :div, script, id: id
   end
 
+  def react_components
+    Dir["#{Rails.root}/app/assets/javascripts/components/**/*.js.jsx"].map do |file|
+      "./components#{file.gsub(/(\A.*components|\.js\.jsx\z)/, "")}"
+    end
+  end
+
+  def components_as_json
+    buffer = []
+    buffer << "var components = {};"
+    react_components.each do |js_module|
+      name = File.basename(js_module).camelize
+      buffer << "components[\"#{name}\"] = require(\"#{js_module}\");"
+    end
+
+    buffer.join("\n")
+  end
+
   private
 
   def react_component_id

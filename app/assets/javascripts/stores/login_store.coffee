@@ -3,7 +3,7 @@ EventEmitter = require("events").EventEmitter
 Dispatcher   = require("../dispatcher")
 Constants    = require("../constants/login_constants")
 Api          = require("../lib/api")
-Routes       = require("./route_store")
+Routes       = require("../config/routes")
 
 SUCCESS_EVENT = "LOGIN_SUCCEEDED"
 FAIL_EVENT = "LOGIN_FAILED"
@@ -14,7 +14,7 @@ login = (username, password) ->
   Api.clearAuthToken()
   errors = null
 
-  op = Api.post Routes.urlFor("LOGIN"),
+  op = Api.post Routes.adminLoginPath(),
     grant_type: "password"
     username: username
     password: password

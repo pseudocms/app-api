@@ -17,4 +17,10 @@ class Admin::LoginControllerTest < ActionController::TestCase
     post :create, token: "12345"
     assert_redirected_to admin_root_path
   end
+
+  test "DELETEing to destroy resets the session" do
+    login_as_user
+    delete :destroy
+    assert_nil session[:auth_token]
+  end
 end

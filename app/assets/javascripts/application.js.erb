@@ -1,17 +1,10 @@
 //= require turbolinks
 
-<%
-  jsx_glob = "#{Rails.root}/app/assets/javascripts/components/**/*.js.jsx"
-  components = Dir[jsx_glob].map { |file| File.basename(file, ".js.jsx") }
-%>
-
 var Initializer = require("./config/initializer")
-
-var components = {}
-<% components.each do |f| %>
-  components["<%= f.camelize %>"] = require("./components/<%= f %>");
-<% end %>
+<%= components_as_json %>
+<%= routes_as_json %>
 
 Initializer.initialize({
-  components: components
+  components: components,
+  routes: routes
 });

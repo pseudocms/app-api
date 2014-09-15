@@ -22,5 +22,6 @@ Rails.application.routes.draw do
     root "dashboard#index"
     get "/login", to: "login#index"
     post "/login", to: "login#create"
+    delete "/logout", to: "login#destroy"
   end
 end

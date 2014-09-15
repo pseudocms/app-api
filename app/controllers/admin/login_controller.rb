@@ -9,4 +9,9 @@ class Admin::LoginController < ApplicationController
     session[:auth_token] = params[:token]
     redirect_to admin_root_path
   end
+
+  def destroy
+    reset_session
+    redirect_to admin_login_path
+  end
 end
