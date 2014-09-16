@@ -16,8 +16,8 @@ describe "LinkList", ->
 
   it "renders links as list items", ->
     links = [
-      { text: "Item 1", url: "/item1" },
-      { text: "Item 2", url: "/item2" }
+      { text: "Item 1", href: "/item1" },
+      { text: "Item 2", href: "/item2" }
     ]
 
     LinkList = require("../link_list")
@@ -27,8 +27,8 @@ describe "LinkList", ->
 
   it "transfers link properties to the individual anchor tags", ->
     links = [
-      { text: "Item 1", url: "http://item1.com/", className: "active" },
-      { text: "Item 2", url: "/item2" }
+      { text: "Item 1", href: "http://item1.com/", className: "active" },
+      { text: "Item 2", href: "/item2" }
     ]
 
     LinkList = require("../link_list")
@@ -36,6 +36,6 @@ describe "LinkList", ->
     linkElements = @utils.scryRenderedDOMComponentsWithTag(linkList, "a")
 
     activeLink = linkElements[0].getDOMNode()
-    expect(activeLink.href).toBe(links[0].url)
+    expect(activeLink.href).toBe(links[0].href)
     expect(activeLink.className).toBe(links[0].className)
     expect(activeLink.innerHTML).toBe(links[0].text)

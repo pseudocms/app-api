@@ -1,17 +1,17 @@
 /** @jsx React.DOM */
 
 var React = require("react");
-var count = 0;
+var Link = require("./link");
 
-var Link = React.createClass({
+var NavLink = React.createClass({
   propTypes: {
     text: React.PropTypes.string.isRequired,
-    url: React.PropTypes.string.isRequired
+    href: React.PropTypes.string.isRequired
   },
 
   render: function() {
-    var link  = this.transferPropsTo(<a href={this.props.url}>{this.props.text}</a>);
-    return <li key={count++}>{link}</li>;
+    var link  = this.transferPropsTo(<Link />);
+    return <li>{link}</li>;
   }
 });
 
@@ -21,8 +21,9 @@ var LinkList = React.createClass({
   },
 
   render: function() {
+    var count = 0;
     var links = this.props.links.map(function(link) {
-      return Link(link);
+      return NavLink(link);
     });
 
     return this.transferPropsTo(

@@ -5,11 +5,15 @@ var Icon     = require("./icon");
 var LinkList = require("./link_list");
 var Heading  = require("./heading");
 
+function logout(e) {
+  e.preventDefault();
+  alert("Logging out");
+}
 
 var LINKS = [
-  { text: "Lorem", url: "#" },
-  { text: "Ipsum", url: "#" },
-  { text: "Logout", url: "#" }
+  { text: "Lorem", href: "#" },
+  { text: "Ipsum", href: "#" },
+  { text: "Logout", href: "adminLogoutPath", onClick: logout }
 ];
 
 var Header = React.createClass({
