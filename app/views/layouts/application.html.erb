@@ -15,6 +15,7 @@
     </section>
   </div>
 
+  <%= form_tag admin_logout_path, id: "logout-form", method: :delete %>
   <%= javascript_include_tag "application", "data-track-turbolinks" => true %>
   <%= yield(:scripts) %>
 </body>

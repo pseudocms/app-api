@@ -4,10 +4,11 @@ var React    = require("react");
 var Icon     = require("./icon");
 var LinkList = require("./link_list");
 var Heading  = require("./heading");
+var $        = require("jquery");
 
 function logout(e) {
   e.preventDefault();
-  alert("Logging out");
+  $("#logout-form").submit();
 }
 
 var LINKS = [

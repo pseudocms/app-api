@@ -14,7 +14,7 @@ login = (username, password) ->
   Api.clearAuthToken()
   errors = null
 
-  op = Api.post Routes.adminLoginPath(),
+  op = Api.post Routes.oauthTokenPath(),
     grant_type: "password"
     username: username
     password: password

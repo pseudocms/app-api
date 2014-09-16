@@ -65,9 +65,6 @@ var LoginForm = React.createClass({
             <LoginButton onClick={this._login} />
           </div>
         </CardContent>
-        <form action="/admin/login" method="post">
-          <input type="hidden" name="auth_token" />
-        </form>
       </Card>
     );
   },
