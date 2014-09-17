@@ -10,8 +10,8 @@ describe "Routes", ->
   describe "path and url generation", ->
     beforeEach ->
       Routes.initRoutes
-        "oauth_tokens": "/oauth/token"
-        "admin_root": "/admin"
+        "oauthTokens": "/oauth/token"
+        "adminRoot": "/admin"
 
     it "makes a path function for each supplied route", ->
       expect(Routes.oauthTokensPath()).toBe("/oauth/token")
@@ -25,8 +25,8 @@ describe "Routes", ->
     beforeEach ->
       Routes.initRoutes
         "user": "/users/:id"
-        "user_roles": "/users/:id/roles"
-        "user_role": "/users/:id/roles/:role_id"
+        "userRoles": "/users/:id/roles"
+        "userRole": "/users/:id/roles/:role_id"
 
     it "replaces tokens with values from object", ->
       user =
@@ -42,7 +42,7 @@ describe "Routes", ->
       Routes.initRoutes
         "root": "/"
         "user": "/users/:id"
-        "user_role": "/users/:id/roles/:role_id"
+        "userRole": "/users/:id/roles/:role_id"
 
     it "replaces tokens with ordered arguments", ->
       expect(Routes.userPath(1)).toBe("/users/1")

@@ -29,9 +29,9 @@ describe "Link", ->
       @routes = require("../../config/routes")
       @routes.setBaseUrl("https://example.com/")
       @routes.initRoutes
-        "admin_root": "/admin"
+        "adminRoot": "/admin"
         "user": "/users/:id"
-        "user_role": "/users/:id/role/:role_id"
+        "userRole": "/users/:id/role/:role_id"
 
     it "uses the route definition", ->
       Link = require("../link")

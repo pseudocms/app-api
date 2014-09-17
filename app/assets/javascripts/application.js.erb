@@ -2,9 +2,8 @@
 
 var Initializer = require("./config/initializer")
 <%= components_as_json %>
-<%= routes_as_json %>
 
 Initializer.initialize({
   components: components,
-  routes: routes
+  routes: <%= JsRoutes.render_routes %>
 });

@@ -2,10 +2,6 @@
 BASE_URL = "//#{document.location}"
 PARAM_PATTERN = /:[^\/$]+(\/|$)/
 
-camelize = (string) ->
-  string.replace /(?:[-_])(\w)/g, (dontCare, char) ->
-    if char then char.toUpperCase() else ""
-
 addRoute = (name, value) ->
   RouteSet["#{name}Path"] = -> buildRoute(value, arguments)
   RouteSet["#{name}Url"] = -> buildRoute("#{BASE_URL}#{value}", arguments)
@@ -38,6 +34,6 @@ RouteSet =
 
   initRoutes: (routes) ->
     Object.keys(routes).map (key) ->
-      addRoute(camelize(key), routes[key])
+      addRoute(key, routes[key])
 
 module.exports = RouteSet
