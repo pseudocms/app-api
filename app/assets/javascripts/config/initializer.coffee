@@ -1,7 +1,20 @@
-RouteManager     = require("./initializers/routes")
-ComponentManager = require("./initializers/components")
+$ = require("jquery")
+
+Initializers = [
+  require("./initializers/routes"),
+  require("./initializers/components"),
+  require("./initializers/focus"),
+  require("./initializers/forms")
+]
+
+initializationOptions = null
+
+runInitializers = ->
+  Initializers.map (initializer) ->
+    initializer.initialize(initializationOptions)
 
 module.exports =
   initialize: (options) ->
-    [RouteManager, ComponentManager].map (initializer) ->
-      initializer.initialize(options)
+    initializationOptions = options
+    $(document).on("page:load", runInitializers)
+    $ -> runInitializers()

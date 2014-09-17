@@ -17,7 +17,7 @@ var InputField = React.createClass({
     return (
       <div className="form__field">
         <label className="form__label" htmlFor={this.props.name}>{this.props.label}</label>
-        {this.transferPropsTo(<Input type={this.props.name} className="form__input required" />)}
+        {this.transferPropsTo(<Input id={this.props.name} type={this.props.name} className="form__input required" />)}
       </div>
     );
   }
@@ -51,6 +51,7 @@ var LoginForm = React.createClass({
   render: function() {
     var validEmail = this._emailIsValid();
     var validPassword = this._passwordIsValid();
+    var disableLogin = !(validEmail && validPassword);
 
     return (
       <Card className="card--login">
@@ -58,11 +59,11 @@ var LoginForm = React.createClass({
           <Heading iconType="fa-lock" text="Please Login" />
         </CardHeader>
         <CardContent>
-          <div className="form">
+          <div className="form js-form">
             <Errors message="Oops! Looks liks something went wrong." errors={this.state.errors} />
             <InputField label="Email" name="email" valid={validEmail} value={this.state.email} onChange={this._valueChanged} placeholder="user@example.com" />
             <InputField label="Password" name="password" valid={validPassword} value={this.state.password} onChange={this._valueChanged} />
-            <LoginButton onClick={this._login} />
+            <LoginButton className="js-btn--submit" disabled={disableLogin} onClick={this._login} />
           </div>
         </CardContent>
       </Card>
