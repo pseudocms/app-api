@@ -15,6 +15,7 @@ gem "turbolinks"
 gem "sass"
 gem "bourbon"
 gem "font-awesome-rails"
+gem "routesjs-rails"
 
 group :development do
   gem "thin"

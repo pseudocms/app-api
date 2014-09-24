@@ -1,7 +1,7 @@
 $ = require("jquery")
 
 Initializers = [
-  require("./initializers/routes"),
+  #require("./initializers/routes"),
   require("./initializers/components"),
   require("./initializers/focus"),
   require("./initializers/forms")
