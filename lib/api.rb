@@ -1,3 +1,4 @@
+require_relative "api/responder"
 require_relative "api/serializable"
 require_relative "api/serializer"
 
