@@ -1,0 +1,4 @@
+@mixin border-radius($pixels) {
+  @include border-top-radius($pixels);
+  @include border-bottom-radius($pixels);
+}

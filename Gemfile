@@ -8,8 +8,11 @@ gem "pg"
 
 gem "devise"
 gem "doorkeeper"
-
 gem "kaminari"
+
+gem "turbolinks"
+gem "sass"
+gem "bourbon"
 
 group :development do
   gem "thin"
