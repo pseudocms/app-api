@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <%= stylesheet_link_tag "application", media: "all", "data-track-turbolinks" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="page">
+    <section class="container">
+      <%= yield %>
+    </section>
+  </div>
+
+  <%= javascript_include_tag "application", "data-track-turbolinks" => true %>
+  <%= yield(:scripts) %>
+</body>
+</html>
