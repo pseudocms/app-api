@@ -49,6 +49,8 @@ GEM
     bourbon (4.0.2)
       sass (~> 3.3)
       thor
+    browserify-rails (0.4.2)
+      sprockets (~> 2.0)
     builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
@@ -186,6 +188,7 @@ PLATFORMS
 
 DEPENDENCIES
   bourbon
+  browserify-rails
   devise
   doorkeeper
   factory_girl_rails

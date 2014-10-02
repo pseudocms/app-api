@@ -1,0 +1,35 @@
+{
+  "name": "pseudocms",
+  "author": "David Muto",
+  "repository": "https://github.com/pseudocms/app-api",
+  "dependencies": {
+    "react": "~> 0.11.0",
+    "flux": "^2.0.0"
+  },
+  "devDependencies" : {
+    "browserify": "~> 4.2",
+    "reactify": "~> 0.14.0",
+    "coffeeify": "~> 0.6",
+    "coffee-script": "*",
+    "react-tools": "*",
+    "jest-cli": "*",
+    "lodash": "~> 2.4.0",
+    "jquery": "~> 2.1.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "browserify": {
+    "transform": ["reactify"]
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
+    "testFileExtensions": ["coffee", "js"],
+    "moduleFileExtensions": ["js", "js.jsx", "coffee"]
+  }
+}

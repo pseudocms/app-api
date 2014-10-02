@@ -13,6 +13,7 @@ gem "kaminari"
 gem "turbolinks"
 gem "sass"
 gem "bourbon"
+gem "browserify-rails"
 
 group :development do
   gem "thin"
