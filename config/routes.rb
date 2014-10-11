@@ -13,5 +13,7 @@ Rails.application.routes.draw do
 
   namespace :admin, constraints: { format: false } do
     root "dashboard#index"
+
+    get "/login", to: "login#index"
   end
 end
