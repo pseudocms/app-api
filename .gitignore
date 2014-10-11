@@ -17,6 +17,7 @@
 
 # Developer specific stuff...
 /config/database.yml
+node_modules/
 
 # Ignore application configuration
 /config/application.yml

@@ -1,0 +1,19 @@
+//= require normalize
+
+@import "bourbon";
+@import "variables";
+@import "mixins";
+
+html, body {
+  background-color: $siteBackgroundColor;
+  box-sizing: border-box;
+  font-family: $helvetica;
+  color: #333;
+}
+
+.window {
+  margin: 0 auto;
+  padding: 0 em(10);
+}
+
+@import "components/page";

@@ -8,8 +8,14 @@ gem "pg"
 
 gem "devise"
 gem "doorkeeper"
-
 gem "kaminari"
+gem "connection_pool"
+
+gem "turbolinks"
+gem "sass"
+gem "coffee-rails"
+gem "bourbon"
+gem "browserify-rails"
 
 group :development do
   gem "thin"
