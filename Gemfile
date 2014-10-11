@@ -9,6 +9,7 @@ gem "pg"
 gem "devise"
 gem "doorkeeper"
 gem "kaminari"
+gem "connection_pool"
 
 gem "turbolinks"
 gem "sass"

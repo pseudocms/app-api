@@ -65,6 +65,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     columnize (0.8.9)
+    connection_pool (2.0.0)
     daemons (1.1.9)
     debugger-linecache (1.2.0)
     devise (3.3.0)
@@ -189,6 +190,7 @@ PLATFORMS
 DEPENDENCIES
   bourbon
   browserify-rails
+  connection_pool
   devise
   doorkeeper
   factory_girl_rails
