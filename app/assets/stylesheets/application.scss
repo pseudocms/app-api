@@ -1,4 +1,5 @@
 //= require normalize
+//= require font-awesome
 
 @import "bourbon";
 @import "variables";
@@ -17,3 +18,4 @@ html, body {
 }
 
 @import "components/page";
+@import "components/card";
