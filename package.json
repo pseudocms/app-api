@@ -4,17 +4,17 @@
   "repository": "https://github.com/pseudocms/app-api",
   "dependencies": {
     "react": "~> 0.11.0",
-    "flux": "^2.0.0"
-  },
-  "devDependencies" : {
+    "flux": "^2.0.0",
     "browserify": "~> 4.2",
     "reactify": "~> 0.14.0",
     "coffeeify": "~> 0.6",
-    "coffee-script": "*",
-    "react-tools": "*",
-    "jest-cli": "*",
     "lodash": "~> 2.4.0",
     "jquery": "~> 2.1.0"
+  },
+  "devDependencies" : {
+    "coffee-script": "*",
+    "react-tools": "*",
+    "jest-cli": "*"
   },
   "license": "MIT",
   "engines": {
