@@ -3,8 +3,7 @@ module Admin
 
     def react(&block)
       id = react_component_id
-      code = "/** @jsx React.DOM */\n#{capture(&block)}"
-      component = Reactor::Compiler.new(code, jsx: true).compile
+      component = Reactor.compile(capture(&block))
       content_tag :div, react_register_script(id, component), id: id
     end
 

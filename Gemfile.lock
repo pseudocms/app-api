@@ -190,6 +190,7 @@ PLATFORMS
 DEPENDENCIES
   bourbon
   browserify-rails
+  coffee-rails
   connection_pool
   devise
   doorkeeper

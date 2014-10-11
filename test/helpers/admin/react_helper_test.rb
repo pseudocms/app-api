@@ -12,7 +12,7 @@ class Admin::ReactHelperTest < ActionView::TestCase
   end
 
   test "#react compiles the jsx from the block" do
-    Reactor::Compiler.any_instance.expects(:compile).returns("")
+    Reactor.any_instance.expects(:compile).returns("")
     assert_not_nil result
   end
 
