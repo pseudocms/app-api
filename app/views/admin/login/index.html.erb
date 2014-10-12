@@ -4,8 +4,12 @@
       <CardHeader>
         <Heading icon="fa-lock" text="Please Login" />
       </CardHeader>
-      <CardContent>
-        <p>Login Form Here</p>
+      <CardContent className="form">
+        <FormField label="Email:" type="email" name="email" className="required" />
+        <FormField label="Password:" type="password" name="password" className="required" />
+        <div className="form__field form__field--actions">
+          <button className="btn">Login</button>
+        </div>
       </CardContent>
     </Card>
   <% end %>

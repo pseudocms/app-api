@@ -9,6 +9,7 @@ Card = React.createClass
         {this.props.children}
       </section>
     `
+
 Header = React.createClass
   render: ->
     @transferPropsTo `
@@ -16,6 +17,7 @@ Header = React.createClass
         {this.props.children}
       </header>
     `
+
 Content = React.createClass
   render: ->
     @transferPropsTo `
