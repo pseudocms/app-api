@@ -18,6 +18,14 @@ Header = React.createClass
       </header>
     `
 
+Footer = React.createClass
+  render: ->
+    @transferPropsTo `
+      <footer className="card__footer">
+        {this.props.children}
+      </footer>
+    `
+
 Content = React.createClass
   render: ->
     @transferPropsTo `
@@ -29,4 +37,5 @@ Content = React.createClass
 module.exports =
   Card: Card
   CardHeader: Header
+  CardFooter: Footer
   CardContent: Content

@@ -10,10 +10,10 @@ Form = React.createClass
 
 Field = React.createClass
   propTypes:
-    label: React.PropTypes.string.isRequired
+    label: React.PropTypes.string
 
   render: ->
-    label = @_label()
+    label = if @props.label then @_label() else null
     field = @_input()
 
     `(

@@ -2,9 +2,9 @@
 
 jest.dontMock("../card")
 
-React = require("react/addons")
-Test  = React.addons.TestUtils
-{Card, CardHeader, CardContent} = require("../card")
+React                                       = require("react/addons")
+Test                                        = React.addons.TestUtils
+{Card, CardHeader, CardFooter, CardContent} = require("../card")
 
 describe "Card", ->
 
@@ -30,6 +30,19 @@ describe "Card", ->
     it "renders children inside a header element", ->
       cardHeader = Test.renderIntoDocument(`<CardHeader>Some Value</CardHeader>`)
       element = Test.findRenderedDOMComponentWithTag(cardHeader, "header").getDOMNode()
+      expect(element.innerHTML).toBe("Some Value")
+
+  describe "Card Footer", ->
+
+    it "transfers props to the surrounding footer element", ->
+      cardFooter = Test.renderIntoDocument(`<CardFooter id="mycardFooter" className="test" />`)
+      element = Test.findRenderedDOMComponentWithTag(cardFooter, "footer").getDOMNode()
+      expect(element.id).toBe("mycardFooter")
+      expect(element.className).toBe("card__footer test")
+
+    it "renders children inside a footer element", ->
+      cardFooter = Test.renderIntoDocument(`<CardFooter>Some Value</CardFooter>`)
+      element = Test.findRenderedDOMComponentWithTag(cardFooter, "footer").getDOMNode()
       expect(element.innerHTML).toBe("Some Value")
 
   describe "Card Content", ->

@@ -17,6 +17,9 @@ html, body {
   padding: 0 em(10);
 }
 
+.tl { text-align: left; }
+.tr { text-align: right; }
+
 @import "components/page";
 @import "components/card";
 @import "components/btn";

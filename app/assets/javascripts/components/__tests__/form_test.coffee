@@ -21,6 +21,10 @@ describe "Form", ->
       expect(label.className).toBe("form__label")
       expect(label.innerHTML).toBe("Email")
 
+    it "skips the label if it's not supplied", ->
+      field = Test.renderIntoDocument(`<FormField type="email" value="david@test.com" />`)
+      expect(-> Test.findRenderedDOMComponentWithTag(field, "label")).toThrow()
+
     it "transfers properties to the field", ->
       field = Test.renderIntoDocument(`<FormField label="Email" type="email" value="david@test.com" />`)
       input = Test.findRenderedDOMComponentWithTag(field, "input").getDOMNode()
