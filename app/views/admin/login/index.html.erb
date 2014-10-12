@@ -1,16 +1,27 @@
 <div class="page">
-  <%= react do %>
-    <Card className="card--login">
-      <CardHeader>
-        <Heading icon="fa-lock" text="Please Login" />
-      </CardHeader>
-      <CardContent className="form">
-        <FormField label="Email:" type="email" name="email" className="required" />
-        <FormField label="Password:" type="password" name="password" className="required" />
-      </CardContent>
-      <CardFooter className="tr">
-        <input type="submit" className="btn" value="Login Now" />
-      </CardFooter>
-    </Card>
+  <%= form_tag admin_login_path, method: :post, onSubmit: "return handleSubmit()" do %>
+    <%= react do %>
+      <Card className="card--login">
+        <CardHeader>
+          <Heading icon="fa-lock" text="Please Login" />
+        </CardHeader>
+        <CardContent>
+          <FormField label="Email:" type="email" name="email" className="required" autoFocus="true" />
+          <FormField label="Password:" type="password" name="password" className="required" />
+        </CardContent>
+        <CardFooter className="tr">
+          <%= submit_tag "Login Now", className: "btn btn--no-outline js-btn-primary" %>
+        </CardFooter>
+      </Card>
+    <% end %>
   <% end %>
 </div>
+
+<%= content_for(:scripts) do %>
+  <%= javascript_tag do %>
+    function handleSubmit(e) {
+      console.log("Blocking submit");
+      return false;
+    }
+  <% end %>
+<% end %>
