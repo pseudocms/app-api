@@ -2,6 +2,7 @@
 
 _     = require("lodash")
 React = require("react")
+Box   = require("./box")
 
 List = React.createClass
   render: ->
@@ -17,10 +18,10 @@ Errors = React.createClass
 
   render: ->
     @transferPropsTo `
-      <div className="box box--errors">
+      <Box className="box--errors">
         <h1>{this.props.title}</h1>
         <List messages={this.props.messages} />
-      </div>
+      </Box>
     `
 
 module.exports = Errors

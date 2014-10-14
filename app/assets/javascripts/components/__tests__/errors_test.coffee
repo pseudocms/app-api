@@ -1,7 +1,6 @@
 ###* @jsx React.DOM ###
 
 jest.dontMock("../errors")
-jest.dontMock("lodash")
 
 React  = require("react/addons")
 Test   = React.addons.TestUtils
