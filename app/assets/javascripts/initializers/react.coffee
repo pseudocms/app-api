@@ -5,6 +5,7 @@ Page                                        = require("../components/page")
 Heading                                     = require("../components/heading")
 Icon                                        = require("../components/icon")
 {Form, FormField}                           = require("../components/form")
+Errors                                      = require("../components/errors")
 
 renderComponent = (id, component) ->
   React.renderComponent(eval(component), document.getElementById(id))

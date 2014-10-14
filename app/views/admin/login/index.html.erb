@@ -1,27 +1,19 @@
 <div class="page">
-  <%= form_tag admin_login_path, method: :post, onSubmit: "return handleSubmit()" do %>
+  <%= form_tag admin_login_path, method: :post do %>
     <%= react do %>
       <Card className="card--login">
         <CardHeader>
           <Heading icon="fa-lock" text="Please Login" />
         </CardHeader>
         <CardContent>
-          <FormField label="Email:" type="email" name="email" className="required" autoFocus="true" />
-          <FormField label="Password:" type="password" name="password" className="required" />
+          <%= render "admin/shared/validation_errors", object: @login unless @login.errors.empty? %>
+          <FormField value="<%= @login.email %>" label="Email:" type="email" name="login[email]" placeholder="user@example.com" className="required" autoFocus="true" />
+          <FormField label="Password:" type="password" name="login[password]" className="required" />
         </CardContent>
         <CardFooter className="tr">
-          <%= submit_tag "Login Now", className: "btn btn--no-outline js-btn-primary" %>
+          <%= submit_tag "Login Now", className: "btn btn--no-outline js-primary-action" %>
         </CardFooter>
       </Card>
     <% end %>
   <% end %>
 </div>
-
-<%= content_for(:scripts) do %>
-  <%= javascript_tag do %>
-    function handleSubmit(e) {
-      console.log("Blocking submit");
-      return false;
-    }
-  <% end %>
-<% end %>

@@ -26,7 +26,7 @@ describe "Form", ->
       <textarea name="textarea">
         Initial Value
       </text>
-      <input type="submit" class="btn btn--primary js-btn-primary">
+      <input type="submit" class="btn btn--primary js-primary-action">
     </form>
     """
 

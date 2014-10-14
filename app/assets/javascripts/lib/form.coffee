@@ -2,7 +2,7 @@ $ = require("jquery")
 _ = require("lodash")
 
 class Form
-  PRIMARY_BUTTONS: ".js-btn-primary"
+  PRIMARY_BUTTONS: ".js-primary-action"
 
   constructor: (form, @options = {}) ->
     @$form = $(form)

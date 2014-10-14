@@ -1,0 +1,3 @@
+<% error_count = object.errors.size %>
+<% title = "There #{"was".pluralize(error_count, "were")} #{error_count} #{"error".pluralize(error_count)}" %>
+<Errors title="<%= title %>" messages={<%= object.errors.full_messages.to_json.html_safe %>} />

@@ -13,7 +13,7 @@ class Reactor
 
   def compile(code)
     result = self.class.context.call("JSXTransformer.transform", jsxify(code))
-    result["code"].sub(JSX_PRAGMA, "").gsub(/\n/, " ").gsub(/\s+/, " ").strip
+    massage(result["code"])
   end
 
   private
@@ -21,6 +21,13 @@ class Reactor
   def jsxify(code)
     return code if JSX_PRAGMA =~ code
     "/** @jsx React.DOM */\n#{code}"
+  end
+
+  def massage(code)
+    code.gsub(/\n/, " ")
+        .gsub(/\s+/, " ")
+        .sub(JSX_PRAGMA, "")
+        .strip
   end
 
   def self.pool
