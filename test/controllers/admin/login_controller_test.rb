@@ -20,4 +20,10 @@ class Admin::LoginControllerTest < ActionController::TestCase
     assert_response :ok
     assert_template :index
   end
+
+  test "#destroy invalidates the session" do
+    delete :destroy
+    assert_nil session[:auth_token]
+    assert_redirected_to admin_root_path
+  end
 end

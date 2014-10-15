@@ -6,6 +6,7 @@ class Admin::LoginController < ApplicationController
   end
 
   def create
+    reset_session
     @login = Login.new(login_params)
     return render "index" unless @login.valid?
 
@@ -25,6 +26,11 @@ class Admin::LoginController < ApplicationController
 
     @login.errors.add(:base, "Invalid login credentials")
     render "index"
+  end
+
+  def destroy
+    reset_session
+    redirect_to admin_root_path
   end
 
   private
