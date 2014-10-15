@@ -1,5 +1,5 @@
 <div class="page">
-  <%= form_tag admin_login_path, method: :post do %>
+  <%= form_for @login, url: admin_login_path, builder: LoginFormBuilder do |f| %>
     <%= react do %>
       <Card className="card--login">
         <CardHeader>
@@ -7,11 +7,11 @@
         </CardHeader>
         <CardContent>
           <%= render "admin/shared/validation_errors", object: @login unless @login.errors.empty? %>
-          <FormField value="<%= @login.email %>" label="Email:" type="email" name="login[email]" placeholder="user@example.com" className="required" autoFocus="true" />
-          <FormField label="Password:" type="password" name="login[password]" className="required" />
+          <%= f.form_field :email, label: "Email:", type: "email", format: "email", placeholder: "user@example.com", className: "required", autoFocus: true %>
+          <%= f.form_field :password, label: "Password:", type: "password", className: "required" %>
         </CardContent>
         <CardFooter className="tr">
-          <%= submit_tag "Login Now", className: "btn btn--no-outline js-primary-action" %>
+          <%= f.submit "Login Now", className: "btn btn--no-outline js-primary-action" %>
         </CardFooter>
       </Card>
     <% end %>

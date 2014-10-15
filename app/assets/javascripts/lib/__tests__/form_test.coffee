@@ -32,6 +32,7 @@ describe "Form", ->
 
     @$form = new Form($("form"))
     @$textField = $("[name='text']")
+    @$emailField = $("[name='email']")
     @$selectField = $("[name='select']")
     @$checkboxField = $("[name='checkbox']")
     @$textareaField = $("[name='textarea']")

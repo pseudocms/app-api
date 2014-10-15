@@ -1,6 +1,6 @@
 class Login
+  include ActiveModel
   include ActiveModel::Validations
-  extend ActiveModel::Naming
 
   attr_accessor :email, :password
 
@@ -15,5 +15,9 @@ class Login
 
   def persisted?
     false
+  end
+
+  def to_key
+    [1]
   end
 end

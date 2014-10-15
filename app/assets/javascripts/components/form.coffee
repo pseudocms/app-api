@@ -1,6 +1,7 @@
 ###* @jsx React.DOM ###
 
 React = require("react")
+Format = require("../constants/format.coffee")
 
 Form = React.createClass
   render: ->
@@ -11,6 +12,10 @@ Form = React.createClass
 Field = React.createClass
   propTypes:
     label: React.PropTypes.string
+    format: React.PropTypes.string
+
+  getInitialState: ->
+    value: @props.value
 
   render: ->
     label = if @props.label then @_label() else null
@@ -27,9 +32,17 @@ Field = React.createClass
     `<label className="form__label" htmlFor={this.props.id}>{this.props.label}</label>`
 
   _input: ->
+    classes = ["form__input"]
+    if @props.format && @state.value
+      validClass = if Format[@props.format].test(@state.value) then "valid" else "invalid"
+      classes.push(validClass)
+
     @transferPropsTo `
-      <input className="form__input" />
+      <input value={this.state.value} className={classes.join(" ")} onChange={this._inputValueChanged} />
     `
+
+  _inputValueChanged: (event) ->
+    @setState(value: event.target.value)
 
 module.exports =
   Form: Form
