@@ -12,6 +12,7 @@ renderComponent = (id, component) ->
 
 module.exports =
   init: ->
+    return unless reactComponents?
     components = _.remove(reactComponents || [])
 
     _.each components, (component, index) ->

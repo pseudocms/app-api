@@ -1,0 +1,10 @@
+<div class="page">
+  <p>Redirecting...</p>
+</div>
+
+<%= content_for(:scripts) do %>
+  <%= javascript_tag do %>
+    localStorage.removeItem("pseudocms.authtoken");
+    Turbolinks.visit(<%= admin_root_path.to_json.html_safe %>);
+  <% end %>
+<% end %>

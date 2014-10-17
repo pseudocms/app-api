@@ -11,7 +11,8 @@ class Admin::LoginControllerTest < ActionController::TestCase
   test "#create logs the user in by setting auth token in the session" do
     user = create(:user, password: "pAssword1")
     post :create, login: { email: user.email, password: "pAssword1" }
-    assert_response :redirect
+    assert_response :ok
+    assert_template :create
     assert_not_nil session[:auth_token]
   end
 
@@ -24,6 +25,6 @@ class Admin::LoginControllerTest < ActionController::TestCase
   test "#destroy invalidates the session" do
     delete :destroy
     assert_nil session[:auth_token]
-    assert_redirected_to admin_root_path
+    assert_template :destroy
   end
 end

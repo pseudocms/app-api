@@ -21,16 +21,14 @@ class Admin::LoginController < ApplicationController
       )
 
       session[:auth_token] = token.token
-      return redirect_to admin_root_path
+    else
+      @login.errors.add(:base, "Invalid login credentials")
+      render "index"
     end
-
-    @login.errors.add(:base, "Invalid login credentials")
-    render "index"
   end
 
   def destroy
     reset_session
-    redirect_to admin_root_path
   end
 
   private
