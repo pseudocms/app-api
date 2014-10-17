@@ -1,7 +1,8 @@
 _ = require("lodash")
 
 INITIALIZERS = [
-  require("./initializers/react")
+  require("./initializers/react"),
+  require("./initializers/form")
 ]
 
 module.exports =

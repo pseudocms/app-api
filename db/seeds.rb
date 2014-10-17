@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+# Admin Application
+Doorkeeper::Application.create!(
+  name: "PseudoCMS Admin",
+  redirect_uri: "https://pseudocms.com/",
+  blessed: true
+)
+
+User.create!(email: "test@user.com", password: "password") if Rails.env.development?

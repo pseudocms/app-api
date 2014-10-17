@@ -1,0 +1,29 @@
+$boxErrorBackgroundColor: #fae1e1;
+$boxErrorBorderColor: #EBBABA;
+
+.box {
+  margin: 0;
+  padding: em(20);
+  font-size: em(13);
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    margin-left: em(25);
+  }
+
+  h1 {
+    font-size: em(13);
+    margin: 0 0 em(5) 0;
+  }
+}
+
+.box--errors {
+  background-color: $boxErrorBackgroundColor;
+  border-bottom: 1px solid $boxErrorBorderColor;
+  margin: 0 -20px;
+  padding-left: em(30);
+}

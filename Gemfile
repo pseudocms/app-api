@@ -15,6 +15,7 @@ gem "turbolinks"
 gem "sass"
 gem "coffee-rails"
 gem "bourbon"
+gem "font-awesome-rails"
 gem "browserify-rails"
 
 group :development do

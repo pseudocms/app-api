@@ -1,0 +1,10 @@
+.btn {
+  @include button;
+  font-size: 0.8em;
+}
+
+.btn--no-outline {
+  &:focus {
+    outline: none;
+  }
+}

@@ -13,5 +13,9 @@ Rails.application.routes.draw do
 
   namespace :admin, constraints: { format: false } do
     root "dashboard#index"
+
+    get "/login", to: "login#index"
+    post "/login", to: "login#create"
+    delete "/logout", to: "login#destroy"
   end
 end

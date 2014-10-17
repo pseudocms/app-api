@@ -1,0 +1,37 @@
+$cardHeaderBackground: #ddd;
+$cardContentBackground: #fff;
+$cardBorderColor: #d8d8d8;
+
+.card__header {
+  @include border-top-radius(em(5));
+  background-color: $cardHeaderBackground;
+  padding: em(8) em(12);
+
+  .fa {
+    margin-right: em(8);
+  }
+
+  h1 {
+    font-size: em(16);
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.card__footer {
+  background-color: $cardContentBackground;
+  border: 1px solid $cardBorderColor;
+  border-top: 0;
+  padding: em(10);
+}
+
+.card__content {
+  border: 1px solid $cardBorderColor;
+  background-color: $cardContentBackground;
+  padding: em(10) em(20) em(30) em(20);
+}
+
+.card--login {
+  width: em(500);
+  margin: em(100) auto 0 auto;
+}

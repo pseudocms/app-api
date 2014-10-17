@@ -1,0 +1,10 @@
+# Run rake app:create to generate an app in dev and add it's id and secret here
+development:
+  client_id:
+  client_secret:
+test:
+  client_id: ""
+  client_secret: ""
+production:
+  client_id: <%= ENV["APP_CLIENT_ID"] %>
+  client_secret: <%= ENV["APP_CLIENT_SECRET"] %>

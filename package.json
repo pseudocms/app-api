@@ -28,7 +28,7 @@
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/preprocessor.js",
-    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"],
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react", "lodash", "constants"],
     "testFileExtensions": ["coffee", "js"],
     "moduleFileExtensions": ["js", "js.jsx", "coffee"]
   }

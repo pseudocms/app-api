@@ -2,7 +2,7 @@
 require 'pathname'
 
 APP_ROOT     = Pathname.new File.expand_path('../../',  __FILE__)
-CONFIG_FILES = %w(config/database.yml)
+CONFIG_FILES = %w(config/database.yml config/application.yml)
 GIT_REMOTES  = { production: "git@heroku.com:pseudocms-api.git" }
 
 Dir.chdir APP_ROOT do
