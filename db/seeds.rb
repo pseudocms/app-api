@@ -7,10 +7,19 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Admin Application
-Doorkeeper::Application.create!(
-  name: "PseudoCMS Admin",
-  redirect_uri: "https://pseudocms.com/",
-  blessed: true
-)
 
-User.create!(email: "test@user.com", password: "password") if Rails.env.development?
+if Rails.env.development?
+  app = Doorkeeper::Application.create!(
+    name: "PseudoCMS Admin",
+    redirect_uri: "https://pseudocms.com/",
+    blessed: true
+  )
+
+  config = Rails.application.config_for(:application)
+  app.update_attributes(
+    uid: config["client_id"],
+    secret: config["client_secret"]
+  )
+
+  User.create!(email: "test@user.com", password: "password")
+end
