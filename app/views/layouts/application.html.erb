@@ -11,5 +11,7 @@
 
   <%= javascript_include_tag "application", "data-track-turbolinks" => true %>
   <%= yield(:scripts) %>
+
+  <%= render "admin/shared/auth_token" %>
 </body>
 </html>
