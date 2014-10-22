@@ -1,19 +1,17 @@
-<div class="page">
-  <%= form_for @login, url: admin_login_path, builder: LoginFormBuilder do |f| %>
-    <%= react do %>
-      <Card className="card--login">
-        <CardHeader>
-          <Heading icon="fa-lock" text="Please Login" />
-        </CardHeader>
-        <CardContent>
-          <%= render "admin/shared/validation_errors", object: @login unless @login.errors.empty? %>
-          <%= f.form_field :email, label: "Email:", type: "email", format: "email", placeholder: "user@example.com", className: "required", autoFocus: true %>
-          <%= f.form_field :password, label: "Password:", type: "password", className: "required" %>
-        </CardContent>
-        <CardFooter className="tr">
-          <%= f.submit "Login Now", className: "btn btn--no-outline js-primary-action" %>
-        </CardFooter>
-      </Card>
-    <% end %>
+<%= form_for @login, url: admin_login_path, builder: LoginFormBuilder do |f| %>
+  <%= react do %>
+    <Card className="card--login">
+      <CardHeader>
+        <Heading icon="fa-lock" text="Please Login" />
+      </CardHeader>
+      <CardContent>
+        <%= render "admin/shared/validation_errors", object: @login unless @login.errors.empty? %>
+        <%= f.form_field :email, label: "Email:", type: "email", format: "email", placeholder: "user@example.com", className: "required", autoFocus: true %>
+        <%= f.form_field :password, label: "Password:", type: "password", className: "required" %>
+      </CardContent>
+      <CardFooter className="tr">
+        <%= f.submit "Login Now", className: "btn btn--no-outline js-primary-action" %>
+      </CardFooter>
+    </Card>
   <% end %>
-</div>
+<% end %>

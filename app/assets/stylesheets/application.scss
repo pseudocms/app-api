@@ -12,11 +12,21 @@ html, body {
   color: #333;
 }
 
+a {
+  color: $linkColor;
+}
+
 .tl { text-align: left; }
 .tr { text-align: right; }
 
-@import "components/page";
+@import "layout/grid";
+@import "layout/main-navigation";
+@import "layout/page";
+
+@import "components/navigation";
 @import "components/card";
 @import "components/btn";
 @import "components/form";
 @import "components/box";
+@import "components/heading";
+@import "components/tooltip";

@@ -1,0 +1,13 @@
+$headerBackgroundColor: #ddd;
+
+.main-navigation {
+  @include clearfix;
+  background: $headerBackgroundColor;
+  height: em(50);
+}
+
+.main-navigation__title {
+  display: inline;
+  font-size: 1.5em;
+  line-height: 2em;
+}
