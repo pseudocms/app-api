@@ -1,7 +1,44 @@
-<%= react do %>
-  <Page>
-    <h1>Hello There</h1>
-  </Page>
-<% end %>
-
-<%= button_to "logout", admin_logout_path, method: :delete %>
+<div class="grid">
+  <div class="grid__cell">
+    <%= react do %>
+      <Card>
+        <CardHeader>
+          <Heading icon="fa-rss" text="Recent Activity" />
+        </CardHeader>
+        <CardContent>
+          <% 1.upto(30) do %>
+            <p>Some item</p>
+          <% end %>
+        </CardContent>
+      </Card>
+    <% end %>
+  </div>
+  <div class="grid__cell--quarter">
+    <div class="grid grid--column">
+      <div class="grid__cell">
+        <%= react do %>
+          <Card>
+            <CardHeader>
+              <Heading icon="fa-th" text="Favourites" />
+            </CardHeader>
+            <CardContent>
+              <p>Your sites here...</p>
+            </CardContent>
+          </Card>
+        <% end %>
+      </div>
+      <div class="grid__cell">
+        <%= react do %>
+          <Card>
+            <CardHeader>
+              <Heading icon="fa-th" text="Your Sites" />
+            </CardHeader>
+            <CardContent>
+              <p>Your sites here...</p>
+            </CardContent>
+          </Card>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+.navigation {
+  margin: 0;
+  padding: 0;
+}
+
+.navigation__container {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation__item {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.navigation--right {
+  float: right;
+}
+
+.navigation--main {
+  a {
+    display: inline-block;
+    padding: 0 em(8);
+    color: #333;
+    text-transform: uppercase;
+    text-decoration: none;
+    height: em(50);
+    line-height: em(50);
+    letter-spacing: em(1);
+
+    &:hover {
+      color: $linkColor;
+    }
+  }
+}

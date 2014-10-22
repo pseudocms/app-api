@@ -7,7 +7,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= yield %>
+  <%= react do %>
+    <header className="main-navigation">
+      <section className="page">
+        <Heading text="PseudoCMS" icon="fa-spinner" className="main-navigation__title" />
+        <% if auth_token.present? %>
+          <Navigation className="navigation--right navigation--main">
+            <Link href="#">Lorem</Link>
+            <Link href="#">Ipsum</Link>
+            <Link href="#">Dolor</Link>
+            <Link aria-label="New Site" className="tooltip" href="#"><Icon className="fa-plus" /></Link>
+            <Link aria-label="Settings" className="tooltip" href="#"><Icon className="fa-cog" /></Link>
+            <Link aria-label="Sign Out" className="tooltip js-sign-out" href="#"><Icon className="fa-sign-out" /></Link>
+          </Navigation>
+        <% end %>
+      </section>
+    </header>
+  <% end %>
+
+  <section class="page">
+    <%= yield %>
+  </section>
 
   <%= javascript_include_tag "application", "data-track-turbolinks" => true %>
   <%= yield(:scripts) %>
