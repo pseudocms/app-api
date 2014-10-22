@@ -1,6 +1,6 @@
-<div class="grid">
-  <div class="grid__cell">
-    <%= react do %>
+<%= react do %>
+  <Grid>
+    <GridCell>
       <Card>
         <CardHeader>
           <Heading icon="fa-rss" text="Recent Activity" />
@@ -11,12 +11,10 @@
           <% end %>
         </CardContent>
       </Card>
-    <% end %>
-  </div>
-  <div class="grid__cell--quarter">
-    <div class="grid grid--column">
-      <div class="grid__cell">
-        <%= react do %>
+    </GridCell>
+    <GridCell className="grid__cell--quarter">
+      <Grid className="grid--column">
+        <GridCell>
           <Card>
             <CardHeader>
               <Heading icon="fa-th" text="Favourites" />
@@ -25,10 +23,8 @@
               <p>Your sites here...</p>
             </CardContent>
           </Card>
-        <% end %>
-      </div>
-      <div class="grid__cell">
-        <%= react do %>
+        </GridCell>
+        <GridCell>
           <Card>
             <CardHeader>
               <Heading icon="fa-th" text="Your Sites" />
@@ -37,8 +33,8 @@
               <p>Your sites here...</p>
             </CardContent>
           </Card>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
+        </GridCell>
+      </Grid>
+    </GridCell>
+  </Grid>
+<% end %>
