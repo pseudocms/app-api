@@ -17,5 +17,7 @@ Rails.application.routes.draw do
     get "/login", to: "login#index"
     post "/login", to: "login#create"
     delete "/logout", to: "login#destroy"
+
+    resources :sites, only: [:index]
   end
 end

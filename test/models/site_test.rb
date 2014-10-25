@@ -35,7 +35,7 @@ class SiteTest < ActiveSupport::TestCase
     site_attrs = [:id, :name, :description, :created_at, :updated_at]
 
     expected = site.attributes.select { |attr, _| site_attrs.include?(attr) }
-    expected[:owner] = { id: user.id }
+    expected[:owner] = { id: user.id, email: user.email }
 
     assert_json(site, expect: expected)
   end

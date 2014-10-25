@@ -13,7 +13,7 @@
         <Heading text="PseudoCMS" icon="fa-spinner" className="main-navigation__title" />
         <% if auth_token.present? %>
           <Navigation className="navigation--right navigation--main">
-            <Link href="#">Lorem</Link>
+            <Link href="<%= admin_sites_path %>">Sites</Link>
             <Link href="#">Ipsum</Link>
             <Link href="#">Dolor</Link>
             <Link aria-label="New Site" className="tooltip" href="#"><Icon className="fa-plus" /></Link>

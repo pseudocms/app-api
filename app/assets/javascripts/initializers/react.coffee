@@ -8,6 +8,7 @@ Errors                                      = require("../components/errors")
 Heading                                     = require("../components/heading")
 Icon                                        = require("../components/icon")
 {Link, Navigation}                          = require("../components/navigation")
+SiteList                                    = require("../components/site_list")
 
 renderComponent = (id, component) ->
   React.renderComponent(eval(component), document.getElementById(id))
