@@ -23,6 +23,7 @@ group :development do
   gem "spring"
   gem "pry-byebug"
   gem "spring-commands-testunit"
+  gem "faker"
 end
 
 group :test do
