@@ -1,6 +1,7 @@
 Dispatcher = require("../dispatcher")
 Constants  = require("../constants/site_constants")
 Api        = require("../lib/api")
+Pager      = require("../lib/pager")
 
 Actions =
   getAll: ->
@@ -8,10 +9,12 @@ Actions =
 
     op = Api.get("/sites")
 
-    op.done (data, status) ->
+    op.done (data, status, xhr) ->
+      pagedResult = Pager.paginate(xhr)
+
       Dispatcher.dispatchData
         actionType: Constants.GET_SITES_COMPLETED
-        data: data
+        data: pagedResult
 
     op.fail (xhr, status, errorThrown) ->
       Dispatcher.dispatchAction

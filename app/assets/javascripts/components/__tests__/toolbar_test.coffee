@@ -10,7 +10,7 @@ describe "Toolbar", ->
 
   it "transfers props to a header element", ->
     toolbar = Test.renderIntoDocument(`<Toolbar className="myToolbar" />`)
-    node = Test.findRenderedDOMComponentWithTag(toolbar, "header").getDOMNode()
+    node = Test.findRenderedDOMComponentWithTag(toolbar, "div").getDOMNode()
     expect(node.className).toBe("toolbar myToolbar")
 
   it "renders it's children within it", ->

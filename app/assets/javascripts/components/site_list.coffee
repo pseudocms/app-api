@@ -1,30 +1,21 @@
 ###* @jsx React.DOM ###
 
+_       = require("lodash")
 React   = require("react")
 Store   = require("../stores/site_store")
 Actions = require("../actions/site_actions")
 
 SiteList = React.createClass
-  getInitialState: ->
-    { sites: [] }
+  getInitialState: -> {}
 
   componentDidMount: ->
-    Store.addChangeListener(@_onSitesChanged)
+    Store.addChangeListener(@onSitesChanged)
     Actions.getAll()
 
   componentWillUnmount: ->
-    Store.removeChangeListener(@_onSitesChanged)
+    Store.removeChangeListener(@onSitesChanged)
 
   render: ->
-    rows = @state.sites.map (site) ->
-      `(
-        <tr key={site.id}>
-          <td>{site.name}</td>
-          <td>{site.owner.email}</td>
-          <td>{site.created_at}</td>
-        </tr>
-      )`
-
     @transferPropsTo `
       <table className="table">
         <thead>
@@ -35,12 +26,22 @@ SiteList = React.createClass
           </tr>
         </thead>
         <tbody>
-          {rows}
+          {this._rows()}
         </tbody>
       </table>
     `
 
-  _onSitesChanged: (sites) ->
-    @setState(sites: sites)
+  onSitesChanged: (paginatedResults) ->
+    @setState(paginatedResults)
+
+  _rows: ->
+    _.map @state.results, (site) ->
+      `(
+        <tr key={site.id}>
+          <td>{site.name}</td>
+          <td>{site.owner.email}</td>
+          <td>{site.created_at}</td>
+        </tr>
+      )`
 
 module.exports = SiteList

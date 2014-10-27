@@ -3,6 +3,8 @@
     <Toolbar>
       <Heading icon="fa-globe" text="Sites" className="toolbar__breadcrumb" />
       <Navigation className="navigation--right toolbar__navigation">
+        <Link className="btn btn--slim" href="#">&lt;</Link>
+        <Link className="btn btn--slim" href="#">&gt;</Link>
         <Link className="btn btn--slim" href="#">Add a site</Link>
       </Navigation>
     </Toolbar>
@@ -14,9 +16,5 @@
     <CardContent>
       <SiteList />
     </CardContent>
-    <CardFooter className="tr">
-      <a className="btn">Prev</a>
-      <a className="btn">Next</a>
-    </CardFooter>
   </Card>
 <% end %>
