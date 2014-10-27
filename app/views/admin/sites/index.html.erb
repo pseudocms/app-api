@@ -1,6 +1,13 @@
-<h1>
-  Sites
-</h1>
+<% content_for(:page_header) do %>
+  <%= react do %>
+    <Toolbar>
+      <Heading icon="fa-globe" text="Sites" className="toolbar__breadcrumb" />
+      <Navigation className="navigation--right toolbar__navigation">
+        <Link className="btn btn--slim" href="#">Add a site</Link>
+      </Navigation>
+    </Toolbar>
+  <% end %>
+<% end %>
 
 <%= react do %>
   <Card>

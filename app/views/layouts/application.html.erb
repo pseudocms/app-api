@@ -25,6 +25,8 @@
     </header>
   <% end %>
 
+  <%= content_for(:page_header) if content_for?(:page_header) %>
+
   <section class="page">
     <%= yield %>
   </section>

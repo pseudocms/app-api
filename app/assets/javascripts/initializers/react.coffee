@@ -9,6 +9,7 @@ Heading                                     = require("../components/heading")
 Icon                                        = require("../components/icon")
 {Link, Navigation}                          = require("../components/navigation")
 SiteList                                    = require("../components/site_list")
+Toolbar                                     = require("../components/toolbar")
 
 renderComponent = (id, component) ->
   React.renderComponent(eval(component), document.getElementById(id))

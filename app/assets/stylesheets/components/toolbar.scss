@@ -1,0 +1,21 @@
+.toolbar {
+  @include clearfix;
+  margin: 0 0 em(20) 0;
+  border-bottom: solid 1px #aaa;
+}
+
+.toolbar__container {
+  width: em(980);
+  margin: 0 auto;
+}
+
+.toolbar__breadcrumb {
+  float: left;
+  margin: em(4) 0 0 0;
+  font-size: 1.5em;
+  text-transform: lowercase;
+}
+
+.toolbar__navigation {
+  margin: em(10) 0;
+}
