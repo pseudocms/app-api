@@ -9,6 +9,7 @@ Heading                                     = require("../components/heading")
 Icon                                        = require("../components/icon")
 {Link, Navigation}                          = require("../components/navigation")
 SiteList                                    = require("../components/site_list")
+SitePager                                   = require("../components/site_pager")
 Toolbar                                     = require("../components/toolbar")
 
 renderComponent = (id, component) ->

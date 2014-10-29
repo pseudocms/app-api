@@ -32,3 +32,25 @@ a {
 @import "components/tooltip";
 @import "components/table";
 @import "components/toolbar";
+
+.pager {
+  padding: 0;
+  line-height: 22px;
+  margin: 0;
+  display: inline-block;
+  vertical-align: middle;
+
+  li {
+    list-style-type: none;
+    display: inline-block;
+    margin: 0;
+  }
+}
+
+.pager__link {
+  border-radius: 3px 0px 0px 3px;
+  border-left-width: 1px !important;
+  display: block;
+  width: 16px;
+  height: 30px;
+}
