@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140714000056) do
+ActiveRecord::Schema.define(version: 20141106011135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "applications", force: true do |t|
+    t.string   "name",                          null: false
+    t.string   "client_id",                     null: false
+    t.string   "client_secret",                 null: false
+    t.boolean  "blessed",       default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "applications", ["client_id"], name: "index_applications_on_client_id", unique: true, using: :btree
+  add_index "applications", ["name"], name: "index_applications_on_name", unique: true, using: :btree
 
   create_table "oauth_access_grants", force: true do |t|
     t.integer  "resource_owner_id", null: false
