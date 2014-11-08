@@ -8,22 +8,11 @@
 
 # Admin Application
 
-if Rails.env.development?
+if Rails.env.development? || Rails.env.test?
+  config = Rails.application.config_for(:application)
   admin_app = Application.create!(
     name: "PseudoCMS Admin",
     blessed: true
-  )
-
-  app = Doorkeeper::Application.create!(
-    name: "PseudoCMS Admin",
-    redirect_uri: "https://pseudocms.com/",
-    blessed: true
-  )
-
-  config = Rails.application.config_for(:application)
-  app.update_attributes(
-    uid: config["client_id"],
-    secret: config["client_secret"]
   )
 
   admin_app.update_attributes(

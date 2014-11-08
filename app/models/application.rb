@@ -1,5 +1,7 @@
 class Application < ActiveRecord::Base
 
+  has_many :access_tokens
+
   validates :name, uniqueness: true, presence: true
   validates :client_id, uniqueness: true, presence: true
   validates :client_secret, presence: true

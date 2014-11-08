@@ -11,7 +11,7 @@
     <header className="main-navigation">
       <section className="page">
         <Heading text="PseudoCMS" icon="fa-spinner" className="main-navigation__title" />
-        <% if auth_token.present? %>
+        <% if access_token.present? %>
           <Navigation className="navigation--right navigation--main">
             <Link href="#">Lorem</Link>
             <Link href="#">Ipsum</Link>
@@ -32,6 +32,5 @@
   <%= javascript_include_tag "application", "data-track-turbolinks" => true %>
   <%= yield(:scripts) %>
 
-  <%= render "admin/shared/auth_token" %>
 </body>
 </html>

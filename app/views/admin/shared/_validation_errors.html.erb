@@ -1,3 +1,9 @@
 <% error_count = object.errors.size %>
-<% title = "There #{"was".pluralize(error_count, "were")} #{error_count} #{"error".pluralize(error_count)}" %>
-<Errors title="<%= title %>" messages={<%= object.errors.full_messages.to_json.html_safe %>} />
+<div class="box box--errors">
+  <h1>There <%= "was".pluralize(error_count, "were") %> <%= error_count %> <%= "error".pluralize(error_count) %></h1>
+  <ul>
+    <% object.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>

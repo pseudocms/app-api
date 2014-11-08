@@ -2,49 +2,43 @@ class Admin::LoginController < ApplicationController
   skip_before_filter :ensure_authed_user
 
   def index
-    @login = Login.new
+    @login = Login.new(application: app_from_params)
   end
 
   def create
-    reset_session
-    @login = Login.new(login_params)
-    return render "index" unless @login.valid?
+    @login = Login.new(login_params.merge(application: app_from_params))
 
-    user = User.find_for_database_authentication(email: login_params[:email])
-    if user && user.valid_password?(login_params[:password])
-      token = Doorkeeper::AccessToken.find_or_create_for(
-        app_client,
-        user.id,
-        doorkeeper.default_scopes,
-        doorkeeper.access_token_expires_in,
-        doorkeeper.refresh_token_enabled?
-      )
-
-      session[:auth_token] = token.token
+    if token = @login.find_or_create_token
+      reset_session
+      cookies[:access_token] = token.token
+      redirect_to admin_root_path
     else
-      @login.errors.add(:base, "Invalid login credentials")
-      render "index"
+      @login.errors.add(:base, "Invalid email and/or password")
+      render :index
     end
   end
 
   def destroy
     reset_session
+    redirect_to admin_root_path
   end
 
   private
 
   def login_params
-    @login_params ||= params.require(:login).permit(:email, :password)
+    params.require(:login).permit(:email, :password)
   end
 
-  def app_client
-    @app_client ||= begin
+  def app_from_params
+    app_params = params.permit(:client_id, :client_secret)
+    if app_params.empty?
       config = Rails.application.config_for(:application)
-      Doorkeeper::Application.find_by_uid_and_secret(config["client_id"], config["client_secret"])
+      app_params = {
+        client_id: config["client_id"],
+        client_secret: config["client_secret"]
+      }
     end
-  end
 
-  def doorkeeper
-    Doorkeeper.configuration
+    Application.find_by_client_id_and_client_secret(app_params[:client_id], app_params[:client_secret])
   end
 end

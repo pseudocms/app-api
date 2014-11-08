@@ -8,4 +8,5 @@ class User < ActiveRecord::Base
   has_many :applications, class_name: 'Doorkeeper::Application', as: :owner
   has_and_belongs_to_many :sites
   has_many :owned_sites, class_name: 'Site'
+  has_many :access_tokens
 end

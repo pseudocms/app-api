@@ -2,29 +2,58 @@ require "test_helper"
 
 class Admin::LoginControllerTest < ActionController::TestCase
 
+  setup do
+    config = Rails.application.config_for(:application)
+    @app_params = { client_id: config["client_id"], client_secret: config["client_secret"] }
+    make_app(@app_params)
+  end
+
   test "#index renders the login page" do
-    get :index
+    get :index, @app_params
     assert_response :ok
     assert_not_nil assigns(:login)
   end
 
-  test "#create logs the user in by setting auth token in the session" do
-    user = create(:user, password: "pAssword1")
-    post :create, login: { email: user.email, password: "pAssword1" }
-    assert_response :ok
-    assert_template :create
-    assert_not_nil session[:auth_token]
+  test "#create stores the auth token in the cookie" do
+    user = create(:user, password: "somePAssword123")
+    params = @app_params.merge({
+      login: {
+        email: user.email,
+        password: "somePAssword123"
+      }
+    })
+
+    post :create, params
+    assert_not_nil cookies[:access_token]
+    assert_redirected_to admin_root_path
   end
 
-  test "#create renders the login page when the credentials aren't valid" do
-    post :create, login: { email: "some@email.com", password: "somePassword" }
-    assert_response :ok
+  test "#create re-renders the login page when credentials aren't valid" do
+    user = create(:user, password: "somePAssword123")
+    params = @app_params.merge({
+      login: {
+        email: user.email,
+        password: "BAD PASSWORD"
+      }
+    })
+
+    post :create, params
+    assert_nil cookies[:auth_token]
+    assert assigns(:login).errors.size > 0
     assert_template :index
   end
 
   test "#destroy invalidates the session" do
     delete :destroy
-    assert_nil session[:auth_token]
-    assert_template :destroy
+    assert_nil cookies[:auth_token]
+    assert_redirected_to admin_root_path
+  end
+
+  private
+
+  def make_app(options = {})
+    app = create(:application)
+    app.update_attributes(options)
+    app
   end
 end

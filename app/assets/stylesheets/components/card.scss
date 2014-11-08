@@ -21,6 +21,10 @@ $cardBorderColor: #d8d8d8;
   padding: em(10);
 }
 
+.card__footer--align-right {
+  text-align: right;
+}
+
 .card__content {
   border: 1px solid $cardBorderColor;
   background-color: $cardContentBackground;
