@@ -2,28 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>PseudoCMS</title>
   <%= stylesheet_link_tag "application", media: "all", "data-track-turbolinks" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= react do %>
-    <header className="main-navigation">
-      <section className="page">
-        <Heading text="PseudoCMS" icon="fa-spinner" className="main-navigation__title" />
-        <% if access_token.present? %>
-          <Navigation className="navigation--right navigation--main">
-            <Link href="#">Lorem</Link>
-            <Link href="#">Ipsum</Link>
-            <Link href="#">Dolor</Link>
-            <Link aria-label="New Site" className="tooltip" href="#"><Icon className="fa-plus" /></Link>
-            <Link aria-label="Settings" className="tooltip" href="#"><Icon className="fa-cog" /></Link>
-            <Link aria-label="Sign Out" className="tooltip js-sign-out" href="#"><Icon className="fa-sign-out" /></Link>
-          </Navigation>
-        <% end %>
-      </section>
-    </header>
-  <% end %>
+  <header class="main-navigation">
+    <section class="page">
+      <h1 class="heading main-navigation__title"><i class="fa fa-spinner"></i>PseudoCMS</h1>
+      <% if access_token.present? %>
+        <nav class="navigation navigation--right navigation--main">
+          <ul class="navigation__container">
+            <li class="navigation__item"><a href="#">Lorem</a></li>
+            <li class="navigation__item"><a href="#">Ipsum</a></li>
+            <li class="navigation__item"><a href="#">Dolor</a></li>
+            <li class="navigation__item">
+              <a href="#" class="tooltip" aria-label="New Site"><i class="fa fa-plus"></i></a>
+            </li>
+            <li class="navigation__item">
+              <a href="#" class="tooltip" aria-label="Settings"><i class="fa fa-cog"></i></a>
+            </li>
+            <li class="navigation__item">
+              <%= link_to admin_logout_path, class: "tooltip", "remote-method" => "delete", "aria-label" => "Sign Out" do %>
+                <i class="fa fa-sign-out"></i>
+              <% end %>
+            </li>
+          </ul>
+        </nav>
+      <% end %>
+    </section>
+  </header>
 
   <section class="page">
     <%= yield %>

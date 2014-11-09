@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/Shopify/turbograft.git
+  revision: a7fb3c5ec4129141cc11b11f635acb0b9e11c64b
+  ref: bugfix/28_compute_redirect_to_location_signature
+  specs:
+    turbograft (0.0.8)
+      coffee-rails
+
+GIT
   remote: git://github.com/rails-api/rails-api.git
   revision: b2dee24b0b66ce0ee43eaec6aab2e0686e58049f
   specs:
@@ -50,15 +58,13 @@ GEM
     bourbon (4.0.2)
       sass (~> 3.3)
       thor
-    browserify-rails (0.4.2)
-      sprockets (~> 2.0)
     builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
     coderay (1.1.0)
-    coffee-rails (4.0.1)
+    coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
     coffee-script (2.3.0)
@@ -81,7 +87,7 @@ GEM
       railties (>= 3.1)
     erubis (2.7.0)
     eventmachine (1.0.3)
-    execjs (2.2.1)
+    execjs (2.2.2)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.4.1)
@@ -105,13 +111,13 @@ GEM
     metaclass (0.0.4)
     method_source (0.8.2)
     mime-types (2.3)
-    mini_portile (0.6.0)
+    mini_portile (0.6.1)
     minitest (5.4.2)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     multi_json (1.10.1)
-    nokogiri (1.6.3.1)
-      mini_portile (= 0.6.0)
+    nokogiri (1.6.4.1)
+      mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
     pg (0.17.1)
     pry (0.10.1)
@@ -137,8 +143,8 @@ GEM
       sprockets-rails (~> 3.0.0.beta1)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.3)
-      activesupport
+    rails-dom-testing (1.0.4)
+      activesupport (>= 4.2.0.beta, < 5.0)
       nokogiri (~> 1.6.0)
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.1)
@@ -172,6 +178,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (~> 2.8)
+    teaspoon (0.8.0)
+      railties (>= 3.2.5, < 5)
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0)
@@ -179,8 +187,6 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
-    turbolinks (2.3.0)
-      coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicorn (4.8.3)
@@ -198,7 +204,6 @@ PLATFORMS
 
 DEPENDENCIES
   bourbon
-  browserify-rails
   coffee-rails
   connection_pool
   devise
@@ -216,7 +221,8 @@ DEPENDENCIES
   sass
   spring
   spring-commands-testunit
+  teaspoon
   thin
-  turbolinks
+  turbograft!
   unicorn
   webmock

@@ -11,12 +11,11 @@ gem "doorkeeper"
 gem "kaminari"
 gem "connection_pool"
 
-gem "turbolinks"
+gem "turbograft", github: "Shopify/turbograft", ref: "bugfix/28_compute_redirect_to_location_signature"
 gem "sass"
 gem "coffee-rails"
 gem "bourbon"
 gem "font-awesome-rails"
-gem "browserify-rails"
 
 group :development do
   gem "thin"
@@ -29,6 +28,10 @@ group :test do
   gem "mocha", require: false
   gem "factory_girl_rails"
   gem "webmock"
+end
+
+group :development, :test do
+  gem "teaspoon"
 end
 
 group :production do

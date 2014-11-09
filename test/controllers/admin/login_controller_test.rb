@@ -9,12 +9,12 @@ class Admin::LoginControllerTest < ActionController::TestCase
   end
 
   test "#index renders the login page" do
-    get :index, @app_params
+    get :index
     assert_response :ok
     assert_not_nil assigns(:login)
   end
 
-  test "#create stores the auth token in the cookie" do
+  test "#create stores the access token in the cookie" do
     user = create(:user, password: "somePAssword123")
     params = @app_params.merge({
       login: {
@@ -38,14 +38,14 @@ class Admin::LoginControllerTest < ActionController::TestCase
     })
 
     post :create, params
-    assert_nil cookies[:auth_token]
+    assert_nil cookies[:access_token]
     assert assigns(:login).errors.size > 0
     assert_template :index
   end
 
   test "#destroy invalidates the session" do
     delete :destroy
-    assert_nil cookies[:auth_token]
+    assert_nil cookies[:access_token]
     assert_redirected_to admin_root_path
   end
 

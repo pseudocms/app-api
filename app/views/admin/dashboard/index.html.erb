@@ -1,40 +1,38 @@
-<%= react do %>
-  <Grid>
-    <GridCell>
-      <Card>
-        <CardHeader>
-          <Heading icon="fa-rss" text="Recent Activity" />
-        </CardHeader>
-        <CardContent>
-          <% 1.upto(30) do %>
-            <p>Some item</p>
-          <% end %>
-        </CardContent>
-      </Card>
-    </GridCell>
-    <GridCell className="grid__cell--quarter">
-      <Grid className="grid--column">
-        <GridCell>
-          <Card>
-            <CardHeader>
-              <Heading icon="fa-th" text="Favourites" />
-            </CardHeader>
-            <CardContent>
-              <p>Your sites here...</p>
-            </CardContent>
-          </Card>
-        </GridCell>
-        <GridCell>
-          <Card>
-            <CardHeader>
-              <Heading icon="fa-th" text="Your Sites" />
-            </CardHeader>
-            <CardContent>
-              <p>Your sites here...</p>
-            </CardContent>
-          </Card>
-        </GridCell>
-      </Grid>
-    </GridCell>
-  </Grid>
-<% end %>
+<div class="grid">
+  <div class="grid__cell">
+    <div class="card">
+      <div class="card__header">
+        <h1 class="heading"><i class="fa fa-rss"></i>Recent Activity</h1>
+      </div>
+      <div class="card__content">
+        <% 1.upto(30) do %>
+          <p>Some Item</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="grid__cell grid__cell--quarter">
+    <div class="grid grid--column">
+      <div class="grid__cell">
+        <div class="card">
+          <div class="card__header">
+            <h1 class="heading"><i class="fa fa-th"></i>Favourites</h1>
+          </div>
+          <div class="card__content">
+            <p>Your Sites Here</p>
+          </div>
+        </div>
+      </div>
+      <div class="grid__cell">
+        <div class="card">
+          <div class="card__header">
+            <h1 class="heading"><i class="fa fa-rss"></i>Sites</h1>
+          </div>
+          <div class="card__content">
+            <p>Your Sites Here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

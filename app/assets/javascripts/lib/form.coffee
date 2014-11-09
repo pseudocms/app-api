@@ -1,14 +1,11 @@
-$ = require("jquery")
-_ = require("lodash")
-
-class Form
-  PRIMARY_BUTTONS: ".js-primary-action"
+class App.Form
+  PRIMARY_BUTTONS = ".js-primary-action"
 
   constructor: (form, @options = {}) ->
     @$form = $(form)
     @$form.on("input change paste", @_updateState)
 
-    @primaryButtons = @$form.find(@PRIMARY_BUTTONS)
+    @primaryButtons = @$form.find(PRIMARY_BUTTONS)
 
     @initialValues = @_fieldValues()
     @_makeClean()
@@ -33,5 +30,3 @@ class Form
     inputs = @$form.find("input, select, textarea")
     _.map inputs, (input) ->
       if input.type in ["checkbox", "radio"] then input.checked else input.value
-
-module.exports = Form
