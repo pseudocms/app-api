@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/Shopify/turbograft.git
-  revision: a7fb3c5ec4129141cc11b11f635acb0b9e11c64b
-  ref: bugfix/28_compute_redirect_to_location_signature
+  revision: 7e875d1ad65dc90f4774526a60ba23ab201bfdd9
+  ref: add_ability_to_use_csrf_tokens
   specs:
     turbograft (0.0.8)
       coffee-rails

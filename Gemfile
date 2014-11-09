@@ -11,7 +11,7 @@ gem "doorkeeper"
 gem "kaminari"
 gem "connection_pool"
 
-gem "turbograft", github: "Shopify/turbograft", ref: "bugfix/28_compute_redirect_to_location_signature"
+gem "turbograft", github: "Shopify/turbograft", ref: "add_ability_to_use_csrf_tokens"
 gem "sass"
 gem "coffee-rails"
 gem "bourbon"

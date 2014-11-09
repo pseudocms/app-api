@@ -44,6 +44,8 @@ class Admin::LoginControllerTest < ActionController::TestCase
   end
 
   test "#destroy invalidates the session" do
+    login_as_user
+
     delete :destroy
     assert_nil cookies[:access_token]
     assert_redirected_to admin_root_path

@@ -20,6 +20,7 @@ class Admin::LoginController < ApplicationController
 
   def destroy
     reset_session
+    cookies.delete(:access_token)
     redirect_to admin_root_path
   end
 
