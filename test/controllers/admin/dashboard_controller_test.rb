@@ -6,10 +6,6 @@ class Admin::DashboardControllerTest < ActionController::TestCase
     login_as_user
   end
 
-  test "index requires a valid user session" do
-    assert_requires_valid_session(:get, :index)
-  end
-
   test "GET index renders the view" do
     get :index
     assert_response :ok

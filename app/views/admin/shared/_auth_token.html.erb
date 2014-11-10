@@ -1,6 +1,0 @@
-<% if auth_token.present? %>
-  <%= javascript_tag do %>
-    localStorage.setItem("pseudocms.authtoken", <%= auth_token.to_json.html_safe %>);
-  <% end %>
-  <%= form_tag admin_logout_path, id: "sign-out-form", method: :delete %>
-<% end %>

@@ -1,9 +1,12 @@
 development:
+  api_uri: http://pseudocms.dev:3000
   client_id: a0a608f766318c128420fbb782d767d1bc590304f426d40979cfe2189590eb4b
   client_secret: a93bd4f184adff5b60be9776bac73235cb43d30b43246b784f3d9f6bdfff032d
 test:
-  client_id: ""
-  client_secret: ""
+  api_url: https://example.com:3000
+  client_id: a0a608f766318c128420fbb782d767d1bc590304f426d40979cfe2189590eb4b
+  client_secret: a93bd4f184adff5b60be9776bac73235cb43d30b43246b784f3d9f6bdfff032d
 production:
+  api_url: https://pseudocms-api.herokuapp.com
   client_id: <%= ENV["APP_CLIENT_ID"] %>
   client_secret: <%= ENV["APP_CLIENT_SECRET"] %>
